@@ -9,9 +9,9 @@
     <style>
         :root {
             --bg: #f5f5f7;
-            --surface: rgba(255, 255, 255, 0.92);
+            --surface: rgba(255, 255, 255, 0.94);
             --border: rgba(0, 0, 0, 0.08);
-            --border-hover: rgba(0, 0, 0, 0.16);
+            --border-hover: rgba(0, 0, 0, 0.18);
             --text-main: #1d1d1f;
             --text-sub: #86868b;
             --blue: #0071e3;
@@ -20,6 +20,7 @@
             --red: #ff3b30;
             --gray-bar: #e5e5ea;
             --card-inner: #fafafc;
+            --badge-bg: #ececf0;
         }
 
         * {
@@ -37,19 +38,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 16px 12px 32px;
+            padding: 16px 12px 36px;
         }
 
         .app-container {
             width: 100%;
-            max-width: 580px;
+            max-width: 680px;
             background: var(--surface);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
             border: 1px solid var(--border);
-            border-radius: 24px;
+            border-radius: 26px;
             padding: 24px 18px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.04);
         }
 
         @media (min-width: 640px) {
@@ -57,8 +58,8 @@
                 padding: 40px 20px;
             }
             .app-container {
-                padding: 32px 28px;
-                border-radius: 28px;
+                padding: 34px 30px;
+                border-radius: 30px;
             }
         }
 
@@ -74,7 +75,7 @@
             color: #248a3d;
             font-size: 11px;
             font-weight: 700;
-            padding: 5px 11px;
+            padding: 5px 12px;
             border-radius: 980px;
             letter-spacing: 0.2px;
         }
@@ -108,7 +109,7 @@
             background: var(--card-inner);
             border: 2px dashed var(--border-hover);
             border-radius: 20px;
-            padding: 24px 16px;
+            padding: 26px 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -146,7 +147,7 @@
             background: #ffffff;
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 12px 14px;
+            padding: 12px 16px;
             display: none;
             align-items: center;
             justify-content: space-between;
@@ -157,7 +158,7 @@
         .file-card-details {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             overflow: hidden;
         }
 
@@ -166,7 +167,7 @@
             color: var(--red);
             font-size: 11px;
             font-weight: 800;
-            padding: 6px 8px;
+            padding: 6px 9px;
             border-radius: 8px;
         }
 
@@ -186,7 +187,7 @@
 
         @media (min-width: 480px) {
             .file-name-txt {
-                max-width: 320px;
+                max-width: 380px;
             }
         }
 
@@ -344,6 +345,100 @@
             transform: scale(0.985);
         }
 
+        .pages-grid-manager {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+            gap: 12px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding: 8px;
+            background: var(--card-inner);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .page-thumb-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            transition: transform 0.15s ease;
+        }
+
+        .page-thumb-card.deleted {
+            opacity: 0.35;
+            filter: grayscale(1);
+            text-decoration: line-through;
+        }
+
+        .thumb-canvas-box {
+            width: 100%;
+            height: 125px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #fdfdfd;
+            border-radius: 6px;
+        }
+
+        .thumb-canvas-box canvas {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+
+        .thumb-footer {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 6px;
+            padding: 0 2px;
+        }
+
+        .thumb-page-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-sub);
+        }
+
+        .thumb-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .thumb-mini-btn {
+            background: var(--badge-bg);
+            border: none;
+            border-radius: 6px;
+            width: 24px;
+            height: 24px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumb-mini-btn.del:hover {
+            background: var(--red);
+            color: #ffffff;
+        }
+
+        .thumb-mini-btn.rot:hover {
+            background: var(--blue);
+            color: #ffffff;
+        }
+
         .extra-file-list {
             display: flex;
             flex-direction: column;
@@ -378,6 +473,185 @@
 
         .action-status.error {
             color: var(--red);
+        }
+
+        .comparison-panel {
+            display: none;
+            margin-top: 24px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .comparison-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .comparison-badge {
+            background: rgba(52, 199, 89, 0.12);
+            color: #248a3d;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 980px;
+        }
+
+        .comparison-stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            background: var(--card-inner);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 12px;
+            text-align: start;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stat-val {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-sub {
+            font-size: 11px;
+            color: var(--green);
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .full-preview-section {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--card-inner);
+            margin-bottom: 16px;
+        }
+
+        .preview-pane-nav {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background: #ffffff;
+        }
+
+        .preview-tab-btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: var(--text-sub);
+            transition: all 0.15s;
+        }
+
+        .preview-tab-btn.active {
+            color: var(--blue);
+            border-bottom: 2px solid var(--blue);
+            background: rgba(0, 113, 227, 0.04);
+        }
+
+        .preview-gallery-container {
+            padding: 14px 10px;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+
+        .full-pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 12px;
+        }
+
+        .preview-page-box {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        .preview-page-box canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .preview-page-lbl {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            margin-top: 6px;
+        }
+
+        .comparison-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        @media (min-width: 480px) {
+            .comparison-actions {
+                flex-direction: row;
+            }
+        }
+
+        .btn-download-result {
+            flex: 2;
+            height: 48px;
+            background: var(--green);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(52, 199, 89, 0.25);
+        }
+
+        .btn-keep-editing {
+            flex: 1;
+            height: 48px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .btn-keep-editing:hover {
+            background: #f2f2f7;
         }
 
         .privacy-box {
@@ -469,20 +743,29 @@
 
         <div class="nav-scroller">
             <div class="tabs-list" id="toolTabsBar">
-                <button class="tab-btn active" onclick="setToolTab('compress', this)" id="tabCompress">ضغط الحجم</button>
+                <button class="tab-btn active" onclick="setToolTab('browser', this)" id="tabBrowser">تصفح وإدارة الصفحات</button>
+                <button class="tab-btn" onclick="setToolTab('compress', this)" id="tabCompress">ضغط الحجم</button>
+                <button class="tab-btn" onclick="setToolTab('watermark', this)" id="tabWatermark">علامة مائية</button>
                 <button class="tab-btn" onclick="setToolTab('extract', this)" id="tabExtract">استخراج صفحات</button>
                 <button class="tab-btn" onclick="setToolTab('delete', this)" id="tabDelete">حذف صفحات</button>
                 <button class="tab-btn" onclick="setToolTab('rotate', this)" id="tabRotate">تدوير</button>
                 <button class="tab-btn" onclick="setToolTab('oddeven', this)" id="tabOddEven">فردي / زوجي</button>
                 <button class="tab-btn" onclick="setToolTab('reverse', this)" id="tabReverse">عكس الترتيب</button>
                 <button class="tab-btn" onclick="setToolTab('numbering', this)" id="tabNumbering">ترقيم الصفحات</button>
-                <button class="tab-btn" onclick="setToolTab('watermark', this)" id="tabWatermark">علامة مائية</button>
                 <button class="tab-btn" onclick="setToolTab('merge', this)" id="tabMerge">دمج ملفات</button>
                 <button class="tab-btn" onclick="setToolTab('img2pdf', this)" id="tabImg2Pdf">صور إلى PDF</button>
             </div>
         </div>
 
-        <div class="tool-box active" id="tool-compress">
+        <div class="tool-box active" id="tool-browser">
+            <div class="field-group">
+                <label class="field-label" id="lblBrowseDesc">تصفح كافة صفحات المستند، تدويرها أو حذف صفحات فردية</label>
+                <div class="pages-grid-manager" id="visualPageManagerGrid"></div>
+            </div>
+            <button class="execute-btn" id="btnSaveBrowser" onclick="saveVisualBrowserChanges()" disabled>حفظ التغييرات</button>
+        </div>
+
+        <div class="tool-box" id="tool-compress">
             <div class="field-group">
                 <label class="field-label" id="lblCompQuality">مستوى الضغط</label>
                 <select class="select-input" id="compressFactor">
@@ -492,6 +775,14 @@
                 </select>
             </div>
             <button class="execute-btn" id="btnRunCompress" onclick="runCompression()" disabled>بدء ضغط الملف</button>
+        </div>
+
+        <div class="tool-box" id="tool-watermark">
+            <div class="field-group">
+                <label class="field-label" id="lblWaterText">نص العلامة المائية</label>
+                <input type="text" class="text-input" id="watermarkContent" placeholder="سري للغاية / Confidential">
+            </div>
+            <button class="execute-btn" id="btnRunWatermark" onclick="runWatermark()" disabled>إضافة العلامة وحفظ</button>
         </div>
 
         <div class="tool-box" id="tool-extract">
@@ -551,14 +842,6 @@
             <button class="execute-btn" id="btnRunNumbering" onclick="runNumbering()" disabled>إضافة الأرقام وحفظ</button>
         </div>
 
-        <div class="tool-box" id="tool-watermark">
-            <div class="field-group">
-                <label class="field-label" id="lblWaterText">نص العلامة المائية</label>
-                <input type="text" class="text-input" id="watermarkContent" placeholder="سري للغاية / Confidential">
-            </div>
-            <button class="execute-btn" id="btnRunWatermark" onclick="runWatermark()" disabled>إضافة العلامة وحفظ</button>
-        </div>
-
         <div class="tool-box" id="tool-merge">
             <div class="field-group">
                 <label class="field-label" id="lblMergeFiles">إضافة ملفات أخرى لدمجها مع الملف الحالي</label>
@@ -581,6 +864,49 @@
 
         <div class="action-status" id="statusBox"></div>
 
+        <div class="comparison-panel" id="comparisonSection">
+            <div class="comparison-header">
+                <div class="comparison-title" id="lblCompHeader">المعاينة الشاملة والمقارنة (قبل وبعد)</div>
+                <span class="comparison-badge" id="lblCompStatus">تم التنفيذ بنجاح</span>
+            </div>
+
+            <div class="comparison-stats-row">
+                <div class="stat-card">
+                    <div class="stat-label" id="lblStatBefore">الملف الأصلي (قبل)</div>
+                    <div class="stat-val" id="statBeforeVal">-</div>
+                    <div class="stat-sub" id="statBeforeSub" style="color:var(--text-sub);">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label" id="lblStatAfter">النتيجة الجديدة (بعد)</div>
+                    <div class="stat-val" id="statAfterVal">-</div>
+                    <div class="stat-sub" id="statDeltaVal">-</div>
+                </div>
+            </div>
+
+            <div class="full-preview-section">
+                <div class="preview-pane-nav">
+                    <button class="preview-tab-btn active" id="btnTabAfterPreview" onclick="switchPreviewGallery('after')">معاينة صفحات النتيجة (بعد)</button>
+                    <button class="preview-tab-btn" id="btnTabBeforePreview" onclick="switchPreviewGallery('before')">معاينة صفحات الأصل (قبل)</button>
+                </div>
+                <div class="preview-gallery-container">
+                    <div class="full-pages-grid" id="previewGridAfter"></div>
+                    <div class="full-pages-grid" id="previewGridBefore" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div class="comparison-actions">
+                <button class="btn-download-result" id="btnDownloadOutput" onclick="downloadCurrentOutput()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span id="lblDownloadBtn">تنزيل الملف الجديد</span>
+                </button>
+                <button class="btn-keep-editing" id="btnKeepEditing" onclick="promoteOutputToActive()">متابعة التعديل عليه</button>
+            </div>
+        </div>
+
         <div class="privacy-box">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -590,7 +916,6 @@
     </div>
 
     <div class="footer-credits" id="creditsSection"></div>
-
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
@@ -600,6 +925,13 @@
         let loadedFileName = '';
         let loadedFileSize = 0;
         let loadedPageCount = 0;
+
+        let workingPagesState = [];
+
+        let outputPdfBytes = null;
+        let outputFileName = '';
+        let outputFileSize = 0;
+        let outputPageCount = 0;
 
         let extraMergeFiles = [];
         let imageFilesList = [];
@@ -614,21 +946,26 @@
                 title: "استوديو PDF",
                 dropTitle: "اختر أو اسحب ملف PDF هنا",
                 dropDesc: "ارفع الملف مرة واحدة واستخدم جميع الأدوات مباشرة",
+                tabBrowser: "تصفح وإدارة الصفحات",
                 tabCompress: "ضغط الحجم",
+                tabWatermark: "علامة مائية",
                 tabExtract: "استخراج صفحات",
                 tabDelete: "حذف صفحات",
                 tabRotate: "تدوير",
                 tabOddEven: "فردي / زوجي",
                 tabReverse: "عكس الترتيب",
                 tabNumbering: "ترقيم الصفحات",
-                tabWatermark: "علامة مائية",
                 tabMerge: "دمج ملفات",
                 tabImg2Pdf: "صور إلى PDF",
+                lblBrowseDesc: "تصفح كافة صفحات المستند، تدويرها أو حذف صفحات فردية",
+                btnSaveBrowser: "حفظ التغييرات وتوليد الملف",
                 lblCompQuality: "مستوى الضغط",
                 optCompMid: "ضغط متوازن (دقة جيدة)",
                 optCompHigh: "ضغط قوي (حجم أقل)",
                 optCompMax: "أقصى ضغط (أصغر حجم ممكن)",
                 btnRunCompress: "بدء ضغط الملف",
+                lblWaterText: "نص العلامة المائية",
+                btnRunWatermark: "إضافة العلامة وحفظ",
                 lblExtPages: "الصفحات المراد استخراجها",
                 btnRunExtract: "استخراج الصفحات وحفظ",
                 lblDelPages: "الصفحات المراد حذفها",
@@ -648,8 +985,6 @@
                 optNumBtmRight: "أسفل اليمين",
                 optNumBtmLeft: "أسفل اليسار",
                 btnRunNumbering: "إضافة الأرقام وحفظ",
-                lblWaterText: "نص العلامة المائية",
-                btnRunWatermark: "إضافة العلامة وحفظ",
                 lblMergeFiles: "إضافة ملفات أخرى لدمجها مع الملف الحالي",
                 btnAddExtra: "اختيار ملفات إضافية",
                 btnRunMerge: "دمج الملفات وحفظ",
@@ -659,10 +994,20 @@
                 lblPrivacyNotice: "أمان وخصوصية 100%: جميع العمليات تتم داخل جهازك بدون رفع أي ملف لسيرفر",
                 processing: "جاري المعالجة محلياً...",
                 compressingPage: "جاري معالجة وضغط صفحة ",
-                done: "تمت العملية بنجاح وجاري التنزيل!",
+                generatingPreview: "جاري توليد المعاينة لكافة الصفحات...",
+                done: "تمت العملية بنجاح! راجع المقارنة أدناه.",
                 invalidPages: "يرجى تحديد صفحات صحيحة",
                 pagesText: "صفحات",
+                pageWord: "صفحة",
                 cannotDeleteAll: "لا يمكن حذف كافة صفحات الملف",
+                lblCompHeader: "المعاينة الشاملة والمقارنة (قبل وبعد)",
+                lblCompStatus: "تم التنفيذ بنجاح",
+                lblStatBefore: "الملف الأصلي (قبل)",
+                lblStatAfter: "النتيجة الجديدة (بعد)",
+                btnTabAfterPreview: "معاينة صفحات النتيجة (بعد)",
+                btnTabBeforePreview: "معاينة صفحات الأصل (قبل)",
+                lblDownloadBtn: "تنزيل الملف الجديد",
+                btnKeepEditing: "متابعة التعديل عليه",
                 credits: `جميع الحقوق محفوظة &copy; 2026<br>
                           تطوير: <a href="${myProfile}" target="_blank" rel="noopener noreferrer">LinkedIn (mbnq)</a>
                           <span class="bar-separator">|</span>
@@ -675,21 +1020,26 @@
                 title: "PDF Studio",
                 dropTitle: "Choose or drag a PDF file here",
                 dropDesc: "Upload once and use all operations directly",
+                tabBrowser: "Browse & Manage Pages",
                 tabCompress: "Compress",
+                tabWatermark: "Watermark",
                 tabExtract: "Extract Pages",
                 tabDelete: "Delete Pages",
                 tabRotate: "Rotate",
                 tabOddEven: "Odd / Even",
                 tabReverse: "Reverse",
                 tabNumbering: "Page Numbers",
-                tabWatermark: "Watermark",
                 tabMerge: "Merge",
                 tabImg2Pdf: "Images to PDF",
+                lblBrowseDesc: "Browse all document pages, rotate them or delete individual pages",
+                btnSaveBrowser: "Save Changes & Generate PDF",
                 lblCompQuality: "Compression Level",
                 optCompMid: "Balanced (Recommended)",
                 optCompHigh: "Strong (Smaller size)",
                 optCompMax: "Extreme (Smallest size)",
                 btnRunCompress: "Compress & Save",
+                lblWaterText: "Watermark text",
+                btnRunWatermark: "Apply Watermark & Save",
                 lblExtPages: "Pages to extract",
                 btnRunExtract: "Extract Pages & Save",
                 lblDelPages: "Pages to delete",
@@ -709,8 +1059,6 @@
                 optNumBtmRight: "Bottom Right",
                 optNumBtmLeft: "Bottom Left",
                 btnRunNumbering: "Add Page Numbers & Save",
-                lblWaterText: "Watermark text",
-                btnRunWatermark: "Apply Watermark & Save",
                 lblMergeFiles: "Add additional PDF files to merge with current",
                 btnAddExtra: "Choose Extra Files",
                 btnRunMerge: "Merge Documents & Save",
@@ -720,10 +1068,20 @@
                 lblPrivacyNotice: "100% Privacy: All processing happens on your local device without uploading",
                 processing: "Processing locally...",
                 compressingPage: "Rendering & compressing page ",
-                done: "Done! File downloaded successfully.",
+                generatingPreview: "Generating full visual comparison...",
+                done: "Done! Review full comparison below.",
                 invalidPages: "Please enter valid page numbers",
                 pagesText: "pages",
+                pageWord: "page",
                 cannotDeleteAll: "Cannot delete all document pages",
+                lblCompHeader: "Full Visual Comparison (Before & After)",
+                lblCompStatus: "Successfully Generated",
+                lblStatBefore: "Original File (Before)",
+                lblStatAfter: "New Result (After)",
+                btnTabAfterPreview: "Preview Result Pages (After)",
+                btnTabBeforePreview: "Preview Original Pages (Before)",
+                lblDownloadBtn: "Download New File",
+                btnKeepEditing: "Keep Editing This Result",
                 credits: `All Rights Reserved &copy; 2026<br>
                           Developed by: <a href="${myProfile}" target="_blank" rel="noopener noreferrer">LinkedIn (mbnq)</a>
                           <span class="bar-separator">|</span>
@@ -747,22 +1105,29 @@
             document.getElementById('lblDropTitle').innerText = t.dropTitle;
             document.getElementById('lblDropDesc').innerText = t.dropDesc;
 
+            document.getElementById('tabBrowser').innerText = t.tabBrowser;
             document.getElementById('tabCompress').innerText = t.tabCompress;
+            document.getElementById('tabWatermark').innerText = t.tabWatermark;
             document.getElementById('tabExtract').innerText = t.tabExtract;
             document.getElementById('tabDelete').innerText = t.tabDelete;
             document.getElementById('tabRotate').innerText = t.tabRotate;
             document.getElementById('tabOddEven').innerText = t.tabOddEven;
             document.getElementById('tabReverse').innerText = t.tabReverse;
             document.getElementById('tabNumbering').innerText = t.tabNumbering;
-            document.getElementById('tabWatermark').innerText = t.tabWatermark;
             document.getElementById('tabMerge').innerText = t.tabMerge;
             document.getElementById('tabImg2Pdf').innerText = t.tabImg2Pdf;
+
+            document.getElementById('lblBrowseDesc').innerText = t.lblBrowseDesc;
+            document.getElementById('btnSaveBrowser').innerText = t.btnSaveBrowser;
 
             document.getElementById('lblCompQuality').innerText = t.lblCompQuality;
             document.getElementById('optCompMid').innerText = t.optCompMid;
             document.getElementById('optCompHigh').innerText = t.optCompHigh;
             document.getElementById('optCompMax').innerText = t.optCompMax;
             document.getElementById('btnRunCompress').innerText = t.btnRunCompress;
+
+            document.getElementById('lblWaterText').innerText = t.lblWaterText;
+            document.getElementById('btnRunWatermark').innerText = t.btnRunWatermark;
 
             document.getElementById('lblExtPages').innerText = t.lblExtPages;
             document.getElementById('btnRunExtract').innerText = t.btnRunExtract;
@@ -789,9 +1154,6 @@
             document.getElementById('optNumBtmLeft').innerText = t.optNumBtmLeft;
             document.getElementById('btnRunNumbering').innerText = t.btnRunNumbering;
 
-            document.getElementById('lblWaterText').innerText = t.lblWaterText;
-            document.getElementById('btnRunWatermark').innerText = t.btnRunWatermark;
-
             document.getElementById('lblMergeFiles').innerText = t.lblMergeFiles;
             document.getElementById('btnAddExtra').innerText = t.btnAddExtra;
             document.getElementById('btnRunMerge').innerText = t.btnRunMerge;
@@ -801,6 +1163,15 @@
             document.getElementById('btnRunImg2Pdf').innerText = t.btnRunImg2Pdf;
 
             document.getElementById('lblPrivacyNotice').innerText = t.lblPrivacyNotice;
+            document.getElementById('lblCompHeader').innerText = t.lblCompHeader;
+            document.getElementById('lblCompStatus').innerText = t.lblCompStatus;
+            document.getElementById('lblStatBefore').innerText = t.lblStatBefore;
+            document.getElementById('lblStatAfter').innerText = t.lblStatAfter;
+            document.getElementById('btnTabAfterPreview').innerText = t.btnTabAfterPreview;
+            document.getElementById('btnTabBeforePreview').innerText = t.btnTabBeforePreview;
+            document.getElementById('lblDownloadBtn').innerText = t.lblDownloadBtn;
+            document.getElementById('btnKeepEditing').innerText = t.btnKeepEditing;
+
             document.getElementById('creditsSection').innerHTML = t.credits;
 
             if (loadedPdfDoc) {
@@ -830,15 +1201,12 @@
             document.getElementById('statusBox').style.display = 'none';
         }
 
-        function saveAndDownload(blobData, fileName) {
-            const url = URL.createObjectURL(blobData);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+        function formatBytes(bytes) {
+            if (!bytes || bytes === 0) return '0 KB';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
         function parseRangeValues(rangeText, totalPages) {
@@ -861,7 +1229,6 @@
             }
             return Array.from(list).sort((a, b) => a - b);
         }
-
         async function handleMainFile(file) {
             if (!file || file.type !== 'application/pdf') return;
 
@@ -873,11 +1240,26 @@
                 loadedPdfDoc = await PDFLib.PDFDocument.load(loadedPdfBytes);
                 loadedPageCount = loadedPdfDoc.getPageCount();
 
+                initWorkingState();
                 renderFileMeta();
                 toggleToolButtons(true);
                 hideStatus();
+                document.getElementById('comparisonSection').style.display = 'none';
+
+                renderVisualBrowserGrid();
             } catch (err) {
                 showStatus('Error reading PDF file', true);
+            }
+        }
+
+        function initWorkingState() {
+            workingPagesState = [];
+            for (let i = 0; i < loadedPageCount; i++) {
+                workingPagesState.push({
+                    originalIndex: i,
+                    rotation: 0,
+                    isDeleted: false
+                });
             }
         }
 
@@ -885,8 +1267,7 @@
             document.getElementById('mainDropArea').style.display = 'none';
             document.getElementById('mainFileBadge').style.display = 'flex';
             document.getElementById('displayFileName').innerText = loadedFileName;
-            const sizeInMB = (loadedFileSize / 1024 / 1024).toFixed(2);
-            document.getElementById('displayFileSize').innerText = `${sizeInMB} MB • ${loadedPageCount} ${dict[appLanguage].pagesText}`;
+            document.getElementById('displayFileSize').innerText = `${formatBytes(loadedFileSize)} • ${loadedPageCount} ${dict[appLanguage].pagesText}`;
         }
 
         function clearCurrentFile() {
@@ -895,17 +1276,25 @@
             loadedFileName = '';
             loadedFileSize = 0;
             loadedPageCount = 0;
+            workingPagesState = [];
+
+            outputPdfBytes = null;
+            outputFileName = '';
 
             document.getElementById('mainDropArea').style.display = 'block';
             document.getElementById('mainFileBadge').style.display = 'none';
             document.getElementById('primaryFileInput').value = '';
+            document.getElementById('visualPageManagerGrid').innerHTML = '';
+            document.getElementById('comparisonSection').style.display = 'none';
 
             toggleToolButtons(false);
             hideStatus();
         }
 
         function toggleToolButtons(enabled) {
+            document.getElementById('btnSaveBrowser').disabled = !enabled;
             document.getElementById('btnRunCompress').disabled = !enabled;
+            document.getElementById('btnRunWatermark').disabled = !enabled;
             document.getElementById('btnRunExtract').disabled = !enabled;
             document.getElementById('btnRunDelete').disabled = !enabled;
             document.getElementById('btnRunRotate').disabled = !enabled;
@@ -913,10 +1302,252 @@
             document.getElementById('btnExtractEven').disabled = !enabled;
             document.getElementById('btnRunReverse').disabled = !enabled;
             document.getElementById('btnRunNumbering').disabled = !enabled;
-            document.getElementById('btnRunWatermark').disabled = !enabled;
             document.getElementById('btnRunMerge').disabled = !enabled && extraMergeFiles.length === 0;
         }
 
+        async function renderVisualBrowserGrid() {
+            const container = document.getElementById('visualPageManagerGrid');
+            container.innerHTML = '';
+            if (!loadedPdfBytes) return;
+
+            const pdfjsDoc = await pdfjsLib.getDocument({ data: loadedPdfBytes.slice(0) }).promise;
+
+            for (let i = 0; i < workingPagesState.length; i++) {
+                const item = workingPagesState[i];
+                const card = document.createElement('div');
+                card.className = `page-thumb-card ${item.isDeleted ? 'deleted' : ''}`;
+                card.id = `thumb-card-${i}`;
+
+                const box = document.createElement('div');
+                box.className = 'thumb-canvas-box';
+
+                const canvas = document.createElement('canvas');
+                box.appendChild(canvas);
+
+                const footer = document.createElement('div');
+                footer.className = 'thumb-footer';
+
+                const pageNum = document.createElement('span');
+                pageNum.className = 'thumb-page-num';
+                pageNum.innerText = `${i + 1}`;
+
+                const actions = document.createElement('div');
+                actions.className = 'thumb-actions';
+
+                const rotBtn = document.createElement('button');
+                rotBtn.className = 'thumb-mini-btn rot';
+                rotBtn.innerHTML = '↻';
+                rotBtn.title = 'Rotate 90°';
+                rotBtn.onclick = () => rotateBrowserPage(i);
+
+                const delBtn = document.createElement('button');
+                delBtn.className = 'thumb-mini-btn del';
+                delBtn.innerHTML = item.isDeleted ? '↩' : '✕';
+                delBtn.title = item.isDeleted ? 'Restore' : 'Delete';
+                delBtn.onclick = () => toggleDeleteBrowserPage(i);
+
+                actions.appendChild(rotBtn);
+                actions.appendChild(delBtn);
+
+                footer.appendChild(pageNum);
+                footer.appendChild(actions);
+
+                card.appendChild(box);
+                card.appendChild(footer);
+                container.appendChild(card);
+
+                const page = await pdfjsDoc.getPage(item.originalIndex + 1);
+                const viewport = page.getViewport({ scale: 0.28, rotation: item.rotation });
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                const ctx = canvas.getContext('2d');
+                await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+            }
+        }
+
+        async function rotateBrowserPage(idx) {
+            workingPagesState[idx].rotation = (workingPagesState[idx].rotation + 90) % 360;
+            const pdfjsDoc = await pdfjsLib.getDocument({ data: loadedPdfBytes.slice(0) }).promise;
+            const page = await pdfjsDoc.getPage(workingPagesState[idx].originalIndex + 1);
+            const card = document.getElementById(`thumb-card-${idx}`);
+            const canvas = card.querySelector('canvas');
+            const viewport = page.getViewport({ scale: 0.28, rotation: workingPagesState[idx].rotation });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            const ctx = canvas.getContext('2d');
+            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+        }
+
+        function toggleDeleteBrowserPage(idx) {
+            workingPagesState[idx].isDeleted = !workingPagesState[idx].isDeleted;
+            const card = document.getElementById(`thumb-card-${idx}`);
+            if (workingPagesState[idx].isDeleted) {
+                card.classList.add('deleted');
+                card.querySelector('.thumb-mini-btn.del').innerHTML = '↩';
+            } else {
+                card.classList.remove('deleted');
+                card.querySelector('.thumb-mini-btn.del').innerHTML = '✕';
+            }
+        }
+
+        async function saveVisualBrowserChanges() {
+            const activePages = workingPagesState.filter(p => !p.isDeleted);
+            if (activePages.length === 0) {
+                showStatus(dict[appLanguage].cannotDeleteAll, true);
+                return;
+            }
+
+            const btn = document.getElementById('btnSaveBrowser');
+            btn.disabled = true;
+            showStatus(dict[appLanguage].processing);
+
+            try {
+                const srcDoc = await PDFLib.PDFDocument.load(loadedPdfBytes);
+                const newDoc = await PDFLib.PDFDocument.create();
+
+                for (let item of activePages) {
+                    const [copiedPage] = await newDoc.copyPages(srcDoc, [item.originalIndex]);
+                    if (item.rotation !== 0) {
+                        const cur = copiedPage.getRotation().angle;
+                        copiedPage.setRotation(PDFLib.degrees((cur + item.rotation) % 360));
+                    }
+                    newDoc.addPage(copiedPage);
+                }
+
+                const outBytes = await newDoc.save();
+                await setupFullComparison(outBytes, `edited_${loadedFileName}`);
+            } catch (err) {
+                showStatus('Browser save failed', true);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function setupFullComparison(resultBytes, fileName) {
+            outputPdfBytes = resultBytes;
+            outputFileName = fileName;
+            outputFileSize = resultBytes.byteLength;
+
+            const resDoc = await PDFLib.PDFDocument.load(resultBytes);
+            outputPageCount = resDoc.getPageCount();
+
+            document.getElementById('statBeforeVal').innerText = `${formatBytes(loadedFileSize || 0)}`;
+            document.getElementById('statBeforeSub').innerText = `${loadedPageCount || 0} ${dict[appLanguage].pagesText}`;
+
+            document.getElementById('statAfterVal').innerText = `${formatBytes(outputFileSize)}`;
+
+            const sizeDiff = outputFileSize - (loadedFileSize || outputFileSize);
+            const deltaPercent = loadedFileSize ? ((sizeDiff / loadedFileSize) * 100).toFixed(1) : 0;
+
+            const deltaEl = document.getElementById('statDeltaVal');
+            if (deltaPercent < 0) {
+                deltaEl.innerText = `${outputPageCount} ${dict[appLanguage].pagesText} (${Math.abs(deltaPercent)}% تقليص حجم)`;
+                deltaEl.style.color = 'var(--green)';
+            } else if (deltaPercent > 0) {
+                deltaEl.innerText = `${outputPageCount} ${dict[appLanguage].pagesText} (+${deltaPercent}% حجم)`;
+                deltaEl.style.color = 'var(--text-main)';
+            } else {
+                deltaEl.innerText = `${outputPageCount} ${dict[appLanguage].pagesText}`;
+                deltaEl.style.color = 'var(--green)';
+            }
+
+            showStatus(dict[appLanguage].generatingPreview);
+
+            await renderComparisonAllPages('previewGridAfter', outputPdfBytes);
+            if (loadedPdfBytes) {
+                await renderComparisonAllPages('previewGridBefore', loadedPdfBytes);
+            }
+
+            document.getElementById('comparisonSection').style.display = 'block';
+            switchPreviewGallery('after');
+            showStatus(dict[appLanguage].done);
+
+            document.getElementById('comparisonSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        async function renderComparisonAllPages(gridElementId, pdfBytesData) {
+            const grid = document.getElementById(gridElementId);
+            grid.innerHTML = '';
+            if (!pdfBytesData) return;
+
+            try {
+                const pdfjsDoc = await pdfjsLib.getDocument({ data: pdfBytesData.slice(0) }).promise;
+                for (let i = 1; i <= pdfjsDoc.numPages; i++) {
+                    const box = document.createElement('div');
+                    box.className = 'preview-page-box';
+
+                    const canvas = document.createElement('canvas');
+                    box.appendChild(canvas);
+
+                    const lbl = document.createElement('div');
+                    lbl.className = 'preview-page-lbl';
+                    lbl.innerText = `${dict[appLanguage].pageWord} ${i}`;
+                    box.appendChild(lbl);
+
+                    grid.appendChild(box);
+
+                    const page = await pdfjsDoc.getPage(i);
+                    const viewport = page.getViewport({ scale: 0.32 });
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    const ctx = canvas.getContext('2d');
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                }
+            } catch (e) {
+                grid.innerHTML = '<div style="font-size:12px; color:red; padding:10px;">Failed to render pages</div>';
+            }
+        }
+
+        function switchPreviewGallery(type) {
+            const afterGrid = document.getElementById('previewGridAfter');
+            const beforeGrid = document.getElementById('previewGridBefore');
+            const tabAfter = document.getElementById('btnTabAfterPreview');
+            const tabBefore = document.getElementById('btnTabBeforePreview');
+
+            if (type === 'after') {
+                afterGrid.style.display = 'grid';
+                beforeGrid.style.display = 'none';
+                tabAfter.classList.add('active');
+                tabBefore.classList.remove('active');
+            } else {
+                afterGrid.style.display = 'none';
+                beforeGrid.style.display = 'grid';
+                tabAfter.classList.remove('active');
+                tabBefore.classList.add('active');
+            }
+        }
+
+        function downloadCurrentOutput() {
+            if (!outputPdfBytes) return;
+            const blob = new Blob([outputPdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = outputFileName || 'document.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        async function promoteOutputToActive() {
+            if (!outputPdfBytes) return;
+            loadedPdfBytes = outputPdfBytes;
+            loadedFileName = outputFileName;
+            loadedFileSize = outputFileSize;
+
+            loadedPdfDoc = await PDFLib.PDFDocument.load(loadedPdfBytes);
+            loadedPageCount = loadedPdfDoc.getPageCount();
+
+            initWorkingState();
+            renderFileMeta();
+            toggleToolButtons(true);
+            renderVisualBrowserGrid();
+
+            document.getElementById('comparisonSection').style.display = 'none';
+            outputPdfBytes = null;
+            showStatus(dict[appLanguage].done);
+        }
         async function runCompression() {
             if (!loadedPdfBytes) return;
             const btn = document.getElementById('btnRunCompress');
@@ -957,10 +1588,67 @@
                 }
 
                 const finalBytes = await newDoc.save();
-                saveAndDownload(new Blob([finalBytes], { type: 'application/pdf' }), `compressed_${loadedFileName}`);
-                showStatus(dict[appLanguage].done);
+                await setupFullComparison(finalBytes, `compressed_${loadedFileName}`);
             } catch (err) {
                 showStatus('Compression failed', true);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function runWatermark() {
+            if (!loadedPdfBytes) return;
+            const watermarkText = document.getElementById('watermarkContent').value.trim();
+            if (!watermarkText) {
+                showStatus('Please enter watermark text', true);
+                return;
+            }
+
+            const btn = document.getElementById('btnRunWatermark');
+            btn.disabled = true;
+            showStatus(dict[appLanguage].processing);
+
+            try {
+                const doc = await PDFLib.PDFDocument.load(loadedPdfBytes);
+                const pages = doc.getPages();
+
+                const wmCanvas = document.createElement('canvas');
+                wmCanvas.width = 600;
+                wmCanvas.height = 300;
+                const wmCtx = wmCanvas.getContext('2d');
+
+                wmCtx.clearRect(0, 0, wmCanvas.width, wmCanvas.height);
+                wmCtx.save();
+                wmCtx.translate(wmCanvas.width / 2, wmCanvas.height / 2);
+                wmCtx.rotate(-Math.PI / 4);
+                wmCtx.font = 'bold 44px -apple-system, sans-serif';
+                wmCtx.fillStyle = 'rgba(128, 128, 128, 0.35)';
+                wmCtx.textAlign = 'center';
+                wmCtx.textBaseline = 'middle';
+                wmCtx.fillText(watermarkText, 0, 0);
+                wmCtx.restore();
+
+                const wmPngBytes = await fetch(wmCanvas.toDataURL('image/png')).then(r => r.arrayBuffer());
+                const wmImage = await doc.embedPng(wmPngBytes);
+
+                pages.forEach(p => {
+                    const { width, height } = p.getSize();
+                    const scale = Math.min(width, height) / 360;
+                    const stampW = wmCanvas.width * scale;
+                    const stampH = wmCanvas.height * scale;
+
+                    p.drawImage(wmImage, {
+                        x: (width - stampW) / 2,
+                        y: (height - stampH) / 2,
+                        width: stampW,
+                        height: stampH
+                    });
+                });
+
+                const outBytes = await doc.save();
+                await setupFullComparison(outBytes, `watermarked_${loadedFileName}`);
+            } catch (err) {
+                showStatus('Watermark failed', true);
             } finally {
                 btn.disabled = false;
             }
@@ -987,8 +1675,7 @@
                 copiedPages.forEach(p => newDoc.addPage(p));
 
                 const outBytes = await newDoc.save();
-                saveAndDownload(new Blob([outBytes], { type: 'application/pdf' }), `extracted_${loadedFileName}`);
-                showStatus(dict[appLanguage].done);
+                await setupFullComparison(outBytes, `extracted_${loadedFileName}`);
             } catch (err) {
                 showStatus('Extraction failed', true);
             } finally {
@@ -1028,8 +1715,7 @@
                 copiedPages.forEach(p => newDoc.addPage(p));
 
                 const outBytes = await newDoc.save();
-                saveAndDownload(new Blob([outBytes], { type: 'application/pdf' }), `modified_${loadedFileName}`);
-                showStatus(dict[appLanguage].done);
+                await setupFullComparison(outBytes, `modified_${loadedFileName}`);
             } catch (err) {
                 showStatus('Deletion failed', true);
             } finally {
@@ -1054,8 +1740,7 @@
                 });
 
                 const outBytes = await doc.save();
-                saveAndDownload(new Blob([outBytes], { type: 'application/pdf' }), `rotated_${loadedFileName}`);
-                showStatus(dict[appLanguage].done);
+                await setupFullComparison(outBytes, `rotated_${loadedFileName}`);
             } catch (err) {
                 showStatus('Rotation failed', true);
             } finally {
@@ -1081,8 +1766,7 @@
                 copiedPages.forEach(p => newDoc.addPage(p));
 
                 const outBytes = await newDoc.save();
-                saveAndDownload(new Blob([outBytes], { type: 'application/pdf' }), `${isOdd ? 'odd' : 'even'}_${loadedFileName}`);
-                showStatus(dict[appLanguage].done);
+                await setupFullComparison(outBytes, `${isOdd ? 'odd' : 'even'}_${loadedFileName}`);
             } catch (err) {
                 showStatus('Split failed', true);
             }
@@ -1106,8 +1790,7 @@
                 copiedPages.forEach(p => newDoc.addPage(p));
 
                 const outBytes = await newDoc.save();
-                saveAndDownload(new Blob([outBytes], { type: 'application/pdf' }), `reversed_${loadedFileName}`);
-                showStatus(dict[appLanguage].done);
+                await setupFullComparison(outBytes, `reversed_${loadedFileName}`);
             } catch (err) {
                 showStatus('Reverse failed', true);
             } finally {
@@ -1148,53 +1831,9 @@
                 });
 
                 const outBytes = await doc.save();
-                saveAndDownload(new Blob([outBytes], { type: 'application/pdf' }), `numbered_${loadedFileName}`);
-                showStatus(dict[appLanguage].done);
+                await setupFullComparison(outBytes, `numbered_${loadedFileName}`);
             } catch (err) {
                 showStatus('Numbering failed', true);
-            } finally {
-                btn.disabled = false;
-            }
-        }
-
-        async function runWatermark() {
-            if (!loadedPdfBytes) return;
-            const watermarkText = document.getElementById('watermarkContent').value.trim();
-            if (!watermarkText) {
-                showStatus('Please enter watermark text', true);
-                return;
-            }
-
-            const btn = document.getElementById('btnRunWatermark');
-            btn.disabled = true;
-            showStatus(dict[appLanguage].processing);
-
-            try {
-                const doc = await PDFLib.PDFDocument.load(loadedPdfBytes);
-                const pages = doc.getPages();
-                const font = await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-
-                pages.forEach(p => {
-                    const { width, height } = p.getSize();
-                    const fontSize = Math.min(width, height) / 10;
-                    const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
-
-                    p.drawText(watermarkText, {
-                        x: (width - textWidth) / 2,
-                        y: height / 2,
-                        size: fontSize,
-                        font: font,
-                        color: PDFLib.rgb(0.75, 0.75, 0.75),
-                        opacity: 0.3,
-                        rotate: PDFLib.degrees(45)
-                    });
-                });
-
-                const outBytes = await doc.save();
-                saveAndDownload(new Blob([outBytes], { type: 'application/pdf' }), `watermarked_${loadedFileName}`);
-                showStatus(dict[appLanguage].done);
-            } catch (err) {
-                showStatus('Watermark failed', true);
             } finally {
                 btn.disabled = false;
             }
@@ -1249,8 +1888,7 @@
                 }
 
                 const outBytes = await targetDoc.save();
-                saveAndDownload(new Blob([outBytes], { type: 'application/pdf' }), 'merged_document.pdf');
-                showStatus(dict[appLanguage].done);
+                await setupFullComparison(outBytes, 'merged_document.pdf');
             } catch (err) {
                 showStatus('Merge failed', true);
             } finally {
@@ -1313,8 +1951,7 @@
                 }
 
                 const outBytes = await doc.save();
-                saveAndDownload(new Blob([outBytes], { type: 'application/pdf' }), 'compiled_images.pdf');
-                showStatus(dict[appLanguage].done);
+                await setupFullComparison(outBytes, 'compiled_images.pdf');
             } catch (err) {
                 showStatus('Conversion failed', true);
             } finally {
