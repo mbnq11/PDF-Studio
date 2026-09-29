@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-tag">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Studio</title>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <style>
+        :root {
+            --bg-body: #f5f5f7;
+            --card-bg: rgba(255, 255, 255, 0.88);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent-blue: #0071e3;
+            --accent-blue-hover: #0077ed;
+            --accent-green: #34c759;
+            --accent-red: #ff3b30;
+            --input-bg: #ffffff;
+            --control-bg: #e5e5ea;
+            --dropzone-bg: #fafafc;
+            --shadow-subtle: 0 4px 24px -1px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+            --shadow-float: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 620px;
+            box-shadow: var(--shadow-subtle), var(--shadow-float);
+            transition: all 0.3s ease;
+        }
+
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .badge-free {
+            background: rgba(52, 199, 89, 0.12);
+            color: #248a3d;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 980px;
+            letter-spacing: 0.3px;
+        }
+
+        #langBtn {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            color: var(--text-primary);
+            padding: 6px 14px;
+            border-radius: 980px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        #langBtn:hover {
+            background: #fafafa;
+            border-color: rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px);
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .segmented-control {
+            display: flex;
+            background: var(--control-bg);
+            border-radius: 12px;
+            padding: 3px;
+            margin-bottom: 24px;
+            gap: 2px;
+            overflow-x: auto;
+        }
+
+        .seg-btn {
+            flex: 1;
+            min-width: fit-content;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            border-radius: 9px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .seg-btn.active {
+            background: #ffffff;
+            color: var(--text-primary);
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .tool-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tool-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropzone {
+            background: var(--dropzone-bg);
+            border: 2px dashed rgba(0, 0, 0, 0.12);
+            border-radius: 18px;
+            padding: 28px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 18px;
+        }
+
+        .dropzone:hover, .dropzone.dragover {
+            border-color: var(--accent-blue);
+            background: rgba(0, 113, 227, 0.03);
+        }
+
+        .dropzone-icon {
+            width: 38px;
+            height: 38px;
+            margin: 0 auto 10px;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropzone-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .dropzone-hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .file-item {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .file-name {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 280px;
+        }
+
+        .file-badge {
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 7px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--accent-red);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .remove-btn:hover {
+            opacity: 1;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            text-align: start;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--input-bg);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12);
+        }
+
+        .primary-btn {
+            background: var(--accent-blue);
+            color: #ffffff;
+            border: none;
+            padding: 13px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .primary-btn:hover {
+            background: var(--accent-blue-hover);
+            box-shadow: 0 6px 16px rgba(0, 113, 227, 0.35);
+        }
+
+        .primary-btn:disabled {
+            background: #a1a1a6;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .primary-btn:active {
+            transform: scale(0.985);
+        }
+
+        .status-msg {
+            margin-top: 14px;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+        }
+
+        .status-msg.success {
+            color: var(--accent-green);
+        }
+
+        .status-msg.error {
+            color: var(--accent-red);
+        }
+
+        .privacy-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 18px;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 6px 12px;
+            border-radius: 980px;
+        }
+
+        .privacy-pill svg {
+            width: 14px;
+            height: 14px;
+            color: var(--accent-green);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        .copyright a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+
+        .separator {
+            color: rgba(0, 0, 0, 0.2);
+            margin: 0 6px;
+        }
+
+        .location {
+            font-size: 12px;
+            color: #999;
+            display: block;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header-controls">
+            <span class="badge-free" id="badgeFree">مجاني 100%</span>
+            <button id="langBtn" onclick="toggleLanguage()">English</button>
+        </div>
+
+        <h1 id="title">استوديو PDF</h1>
+
+        <div class="segmented-control" id="toolSwitcher">
+            <button class="seg-btn active" onclick="switchTool('merge', this)" id="tabMerge">دمج ملفات</button>
+            <button class="seg-btn" onclick="switchTool('split', this)" id="tabSplit">تقسيم واستخراج</button>
+            <button class="seg-btn" onclick="switchTool('img2pdf', this)" id="tabImg2Pdf">صور إلى PDF</button>
+            <button class="seg-btn" onclick="switchTool('rotate', this)" id="tabRotate">تدوير</button>
+            <button class="seg-btn" onclick="switchTool('delete', this)" id="tabDelete">حذف صفحات</button>
+        </div>
+
+        <div class="tool-panel active" id="panel-merge">
+            <div class="dropzone" onclick="document.getElementById('inputMerge').click()">
+                <div class="dropzone-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                </div>
+                <div class="dropzone-title" id="lblDropMerge">اختر أو اسحب ملفات PDF هنا</div>
+                <div class="dropzone-hint" id="lblHintMerge">يمكنك اختيار أكثر من ملف لدمجهم</div>
+                <input type="file" id="inputMerge" multiple accept="application/pdf" style="display:none;" onchange="handleMergeFiles(this.files)">
+            </div>
+            <div class="file-list" id="listMerge"></div>
+            <button class="primary-btn" id="btnRunMerge" onclick="executeMerge()" disabled>دمج وحفظ الملف</button>
+        </div>
+
+        <div class="tool-panel" id="panel-split">
+            <div class="dropzone" onclick="document.getElementById('inputSplit').click()">
+                <div class="dropzone-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+                </div>
+                <div class="dropzone-title" id="lblDropSplit">اختر ملف PDF للتقسيم</div>
+                <div class="dropzone-hint" id="lblHintSplit" class="split-file-name">لم يتم اختيار أي ملف</div>
+                <input type="file" id="inputSplit" accept="application/pdf" style="display:none;" onchange="handleSplitFile(this.files[0])">
+            </div>
+            <div class="input-group">
+                <label id="lblPagesSplit">الصفحات المراد استخراجها (مثال: 1-3, 5)</label>
+                <input type="text" id="splitRange" placeholder="1-3, 5">
+            </div>
+            <button class="primary-btn" id="btnRunSplit" onclick="executeSplit()" disabled>استخراج الصفحات</button>
+        </div>
+
+        <div class="tool-panel" id="panel-img2pdf">
+            <div class="dropzone" onclick="document.getElementById('inputImg').click()">
+                <div class="dropzone-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+                <div class="dropzone-title" id="lblDropImg">اختر أو اسحب الصور هنا (PNG / JPG)</div>
+                <div class="dropzone-hint" id="lblHintImg">يمكنك اختيار صور متعددة لدمجها بملف واحد</div>
+                <input type="file" id="inputImg" multiple accept="image/png, image/jpeg" style="display:none;" onchange="handleImageFiles(this.files)">
+            </div>
+            <div class="file-list" id="listImg"></div>
+            <button class="primary-btn" id="btnRunImg" onclick="executeImgToPdf()" disabled>إنشاء ملف PDF</button>
+        </div>
+
+        <div class="tool-panel" id="panel-rotate">
+            <div class="dropzone" onclick="document.getElementById('inputRotate').click()">
+                <div class="dropzone-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6"/><path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                </div>
+                <div class="dropzone-title" id="lblDropRotate">اختر ملف PDF لتدوير صفحاته</div>
+                <div class="dropzone-hint" id="lblHintRotate">لم يتم اختيار أي ملف</div>
+                <input type="file" id="inputRotate" accept="application/pdf" style="display:none;" onchange="handleRotateFile(this.files[0])">
+            </div>
+            <div class="input-group">
+                <label id="lblDegree">درجة التدوير</label>
+                <select id="rotateDegree">
+                    <option value="90">90° مع عقارب الساعة</option>
+                    <option value="180">180° تدوير كامل</option>
+                    <option value="270">270° عكس عقارب الساعة</option>
+                </select>
+            </div>
+            <button class="primary-btn" id="btnRunRotate" onclick="executeRotate()" disabled>تدوير وحفظ الملف</button>
+        </div>
+
+        <div class="tool-panel" id="panel-delete">
+            <div class="dropzone" onclick="document.getElementById('inputDelete').click()">
+                <div class="dropzone-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </div>
+                <div class="dropzone-title" id="lblDropDelete">اختر ملف PDF لحذف صفحات منه</div>
+                <div class="dropzone-hint" id="lblHintDelete">لم يتم اختيار أي ملف</div>
+                <input type="file" id="inputDelete" accept="application/pdf" style="display:none;" onchange="handleDeleteFile(this.files[0])">
+            </div>
+            <div class="input-group">
+                <label id="lblPagesDelete">أرقام الصفحات المراد حذفها (مثال: 2, 4-6)</label>
+                <input type="text" id="deleteRange" placeholder="2, 4-6">
+            </div>
+            <button class="primary-btn" id="btnRunDelete" onclick="executeDelete()" disabled>حذف الصفحات وحفظ الملف</button>
+        </div>
+
+        <div class="status-msg" id="statusMessage"></div>
+
+        <div style="text-align: center;">
+            <div class="privacy-pill">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span id="privacyText">أمان تام: جميع العمليات تتم محلياً في جهازك بدون رفع أي ملف</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright" id="copyrightText"></div>
+
+    <script>
+        let currentLang = 'ar';
+        const myLinkedIn = "https://linkedin.com/in/mbnq";
+        const myEmail = "mailto:mbnq1@outlook.com";
+
+        let mergeFiles = [];
+        let splitFile = null;
+        let imgFiles = [];
+        let rotateFile = null;
+        let deleteFile = null;
+
+        const translations = {
+            ar: {
+                badgeFree: "مجاني 100%",
+                langBtn: "English",
+                title: "استوديو PDF",
+                tabMerge: "دمج ملفات",
+                tabSplit: "تقسيم واستخراج",
+                tabImg2Pdf: "صور إلى PDF",
+                tabRotate: "تدوير",
+                tabDelete: "حذف صفحات",
+                lblDropMerge: "اختر أو اسحب ملفات PDF هنا",
+                lblHintMerge: "يمكنك اختيار أكثر من ملف لدمجهم",
+                btnRunMerge: "دمج وحفظ الملف",
+                lblDropSplit: "اختر ملف PDF للتقسيم",
+                lblPagesSplit: "الصفحات المراد استخراجها (مثال: 1-3, 5)",
+                btnRunSplit: "استخراج الصفحات",
+                lblDropImg: "اختر أو اسحب الصور هنا (PNG / JPG)",
+                lblHintImg: "يمكنك اختيار صور متعددة لدمجها بملف واحد",
+                btnRunImg: "إنشاء ملف PDF",
+                lblDropRotate: "اختر ملف PDF لتدوير صفحاته",
+                lblDegree: "درجة التدوير",
+                deg90: "90° مع عقارب الساعة",
+                deg180: "180° تدوير كامل",
+                deg270: "270° عكس عقارب الساعة",
+                btnRunRotate: "تدوير وحفظ الملف",
+                lblDropDelete: "اختر ملف PDF لحذف صفحات منه",
+                lblPagesDelete: "أرقام الصفحات المراد حذفها (مثال: 2, 4-6)",
+                btnRunDelete: "حذف الصفحات وحفظ الملف",
+                privacyText: "أمان تام: جميع العمليات تتم محلياً في جهازك بدون رفع أي ملف",
+                processing: "جاري المعالجة محلياً...",
+                noFile: "لم يتم اختيار أي ملف",
+                pageCount: "صفحات",
+                done: "تمت العملية بنجاح وجاري التنزيل!",
+                invalidPages: "يرجى تحديد أرقام صفحات صحيحة",
+                copyright: `جميع الحقوق محفوظة &copy; 2026<br>
+                            تطوير: <a href="${myLinkedIn}" target="_blank" rel="noopener noreferrer">LinkedIn (mbnq)</a> 
+                            <span class="separator">|</span> 
+                            <a href="${myEmail}">الإيميل</a>
+                            <span class="location">المملكة العربية السعودية</span>`
+            },
+            en: {
+                badgeFree: "100% Free",
+                langBtn: "عربي",
+                title: "PDF Studio",
+                tabMerge: "Merge PDFs",
+                tabSplit: "Split & Extract",
+                tabImg2Pdf: "Images to PDF",
+                tabRotate: "Rotate",
+                tabDelete: "Delete Pages",
+                lblDropMerge: "Choose or drop PDF files here",
+                lblHintMerge: "You can select multiple files to merge",
+                btnRunMerge: "Merge & Save PDF",
+                lblDropSplit: "Choose a PDF file to split",
+                lblPagesSplit: "Pages to extract (e.g. 1-3, 5)",
+                btnRunSplit: "Extract Pages",
+                lblDropImg: "Choose or drop images here (PNG / JPG)",
+                lblHintImg: "Select multiple images to compile into one document",
+                btnRunImg: "Create PDF Document",
+                lblDropRotate: "Choose a PDF file to rotate",
+                lblDegree: "Rotation Angle",
+                deg90: "90° Clockwise",
+                deg180: "180° Full Rotation",
+                deg270: "270° Counter-Clockwise",
+                btnRunRotate: "Rotate & Save PDF",
+                lblDropDelete: "Choose a PDF to remove pages",
+                lblPagesDelete: "Page numbers to delete (e.g. 2, 4-6)",
+                btnRunDelete: "Delete Pages & Save PDF",
+                privacyText: "Total Privacy: Files are processed purely on your device, never uploaded",
+                processing: "Processing locally...",
+                noFile: "No file selected",
+                pageCount: "pages",
+                done: "Process finished! Downloading file...",
+                invalidPages: "Please enter valid page numbers",
+                copyright: `All Rights Reserved &copy; 2026<br>
+                            Developed by: <a href="${myLinkedIn}" target="_blank" rel="noopener noreferrer">LinkedIn (mbnq)</a> 
+                            <span class="separator">|</span> 
+                            <a href="${myEmail}">Email</a>
+                            <span class="location">Saudi Arabia</span>`
+            }
+        };
+
+        document.getElementById('copyrightText').innerHTML = translations['ar'].copyright;
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const t = translations[currentLang];
+
+            document.getElementById('html-tag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('html-tag').lang = currentLang;
+
+            document.getElementById('langBtn').innerText = t.langBtn;
+            document.getElementById('badgeFree').innerText = t.badgeFree;
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('privacyText').innerText = t.privacyText;
+
+            document.getElementById('tabMerge').innerText = t.tabMerge;
+            document.getElementById('tabSplit').innerText = t.tabSplit;
+            document.getElementById('tabImg2Pdf').innerText = t.tabImg2Pdf;
+            document.getElementById('tabRotate').innerText = t.tabRotate;
+            document.getElementById('tabDelete').innerText = t.tabDelete;
+
+            document.getElementById('lblDropMerge').innerText = t.lblDropMerge;
+            document.getElementById('lblHintMerge').innerText = t.lblHintMerge;
+            document.getElementById('btnRunMerge').innerText = t.btnRunMerge;
+
+            document.getElementById('lblDropSplit').innerText = t.lblDropSplit;
+            document.getElementById('lblPagesSplit').innerText = t.lblPagesSplit;
+            document.getElementById('btnRunSplit').innerText = t.btnRunSplit;
+
+            document.getElementById('lblDropImg').innerText = t.lblDropImg;
+            document.getElementById('lblHintImg').innerText = t.lblHintImg;
+            document.getElementById('btnRunImg').innerText = t.btnRunImg;
+
+            document.getElementById('lblDropRotate').innerText = t.lblDropRotate;
+            document.getElementById('lblDegree').innerText = t.lblDegree;
+            const rotSelect = document.getElementById('rotateDegree');
+            rotSelect.options[0].text = t.deg90;
+            rotSelect.options[1].text = t.deg180;
+            rotSelect.options[2].text = t.deg270;
+            document.getElementById('btnRunRotate').innerText = t.btnRunRotate;
+
+            document.getElementById('lblDropDelete').innerText = t.lblDropDelete;
+            document.getElementById('lblPagesDelete').innerText = t.lblPagesDelete;
+            document.getElementById('btnRunDelete').innerText = t.btnRunDelete;
+
+            document.getElementById('copyrightText').innerHTML = t.copyright;
+        }
+
+        function switchTool(toolId, btn) {
+            document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('#toolSwitcher .seg-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`panel-${toolId}`).classList.add('active');
+            btn.classList.add('active');
+            hideStatus();
+        }
+
+        function showStatus(text, isError = false) {
+            const el = document.getElementById('statusMessage');
+            el.innerText = text;
+            el.className = 'status-msg ' + (isError ? 'error' : 'success');
+            el.style.display = 'block';
+        }
+
+        function hideStatus() {
+            document.getElementById('statusMessage').style.display = 'none';
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function parseRangeString(str, maxPages) {
+            const pages = new Set();
+            const parts = str.split(',').map(s => s.trim()).filter(Boolean);
+            for (const part of parts) {
+                if (part.includes('-')) {
+                    const [start, end] = part.split('-').map(Number);
+                    if (!isNaN(start) && !isNaN(end) && start <= end) {
+                        for (let i = start; i <= end; i++) {
+                            if (i >= 1 && i <= maxPages) pages.add(i - 1);
+                        }
+                    }
+                } else {
+                    const num = Number(part);
+                    if (!isNaN(num) && num >= 1 && num <= maxPages) {
+                        pages.add(num - 1);
+                    }
+                }
+            }
+            return Array.from(pages).sort((a, b) => a - b);
+        }
+
+        function handleMergeFiles(files) {
+            for (let file of files) {
+                if (file.type === "application/pdf") {
+                    mergeFiles.push(file);
+                }
+            }
+            renderMergeList();
+        }
+
+        function renderMergeList() {
+            const list = document.getElementById('listMerge');
+            list.innerHTML = "";
+            mergeFiles.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <div class="file-info">
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-badge">${(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                    </div>
+                    <button class="remove-btn" onclick="removeMergeFile(${index})">&times;</button>
+                `;
+                list.appendChild(item);
+            });
+            document.getElementById('btnRunMerge').disabled = mergeFiles.length < 2;
+        }
+
+        function removeMergeFile(index) {
+            mergeFiles.splice(index, 1);
+            renderMergeList();
+        }
+
+        async function executeMerge() {
+            const btn = document.getElementById('btnRunMerge');
+            btn.disabled = true;
+            showStatus(translations[currentLang].processing);
+
+            try {
+                const mergedPdf = await PDFLib.PDFDocument.create();
+                for (let file of mergeFiles) {
+                    const bytes = await file.arrayBuffer();
+                    const pdf = await PDFLib.PDFDocument.load(bytes);
+                    const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                    copiedPages.forEach(page => mergedPdf.addPage(page));
+                }
+                const pdfBytes = await mergedPdf.save();
+                downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), 'merged_document.pdf');
+                showStatus(translations[currentLang].done);
+            } catch (err) {
+                showStatus('Error merging files', true);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function handleSplitFile(file) {
+            if (!file) return;
+            splitFile = file;
+            try {
+                const bytes = await file.arrayBuffer();
+                const doc = await PDFLib.PDFDocument.load(bytes);
+                const count = doc.getPageCount();
+                splitFile.pageCount = count;
+                document.getElementById('lblHintSplit').innerText = `${file.name} (${count} ${translations[currentLang].pageCount})`;
+                document.getElementById('btnRunSplit').disabled = false;
+            } catch (e) {
+                showStatus('Invalid PDF file', true);
+            }
+        }
+
+        async function executeSplit() {
+            if (!splitFile) return;
+            const rangeStr = document.getElementById('splitRange').value.trim();
+            const indices = parseRangeString(rangeStr, splitFile.pageCount);
+
+            if (indices.length === 0) {
+                showStatus(translations[currentLang].invalidPages, true);
+                return;
+            }
+
+            const btn = document.getElementById('btnRunSplit');
+            btn.disabled = true;
+            showStatus(translations[currentLang].processing);
+
+            try {
+                const bytes = await splitFile.arrayBuffer();
+                const srcDoc = await PDFLib.PDFDocument.load(bytes);
+                const newDoc = await PDFLib.PDFDocument.create();
+
+                const copiedPages = await newDoc.copyPages(srcDoc, indices);
+                copiedPages.forEach(p => newDoc.addPage(p));
+
+                const pdfBytes = await newDoc.save();
+                downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), 'extracted_pages.pdf');
+                showStatus(translations[currentLang].done);
+            } catch (err) {
+                showStatus('Error extracting pages', true);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function handleImageFiles(files) {
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    imgFiles.push(file);
+                }
+            }
+            renderImgList();
+        }
+
+        function renderImgList() {
+            const list = document.getElementById('listImg');
+            list.innerHTML = "";
+            imgFiles.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <div class="file-info">
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-badge">${(file.size / 1024).toFixed(0)} KB</span>
+                    </div>
+                    <button class="remove-btn" onclick="removeImgFile(${index})">&times;</button>
+                `;
+                list.appendChild(item);
+            });
+            document.getElementById('btnRunImg').disabled = imgFiles.length === 0;
+        }
+
+        function removeImgFile(index) {
+            imgFiles.splice(index, 1);
+            renderImgList();
+        }
+
+        async function executeImgToPdf() {
+            const btn = document.getElementById('btnRunImg');
+            btn.disabled = true;
+            showStatus(translations[currentLang].processing);
+
+            try {
+                const pdfDoc = await PDFLib.PDFDocument.create();
+
+                for (let file of imgFiles) {
+                    const bytes = await file.arrayBuffer();
+                    let img;
+                    if (file.type === 'image/jpeg' || file.name.toLowerCase().endsWith('.jpg') || file.name.toLowerCase().endsWith('.jpeg')) {
+                        img = await pdfDoc.embedJpg(bytes);
+                    } else {
+                        img = await pdfDoc.embedPng(bytes);
+                    }
+
+                    const page = pdfDoc.addPage([img.width, img.height]);
+                    page.drawImage(img, {
+                        x: 0,
+                        y: 0,
+                        width: img.width,
+                        height: img.height,
+                    });
+                }
+
+                const pdfBytes = await pdfDoc.save();
+                downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), 'images_compiled.pdf');
+                showStatus(translations[currentLang].done);
+            } catch (err) {
+                showStatus('Error converting images', true);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function handleRotateFile(file) {
+            if (!file) return;
+            rotateFile = file;
+            try {
+                const bytes = await file.arrayBuffer();
+                const doc = await PDFLib.PDFDocument.load(bytes);
+                document.getElementById('lblHintRotate').innerText = `${file.name} (${doc.getPageCount()} ${translations[currentLang].pageCount})`;
+                document.getElementById('btnRunRotate').disabled = false;
+            } catch (e) {
+                showStatus('Invalid PDF file', true);
+            }
+        }
+
+        async function executeRotate() {
+            if (!rotateFile) return;
+            const btn = document.getElementById('btnRunRotate');
+            btn.disabled = true;
+            showStatus(translations[currentLang].processing);
+
+            const degrees = parseInt(document.getElementById('rotateDegree').value, 10);
+
+            try {
+                const bytes = await rotateFile.arrayBuffer();
+                const doc = await PDFLib.PDFDocument.load(bytes);
+                const pages = doc.getPages();
+
+                pages.forEach(p => {
+                    const currentRotation = p.getRotation().angle;
+                    p.setRotation(PDFLib.degrees((currentRotation + degrees) % 360));
+                });
+
+                const pdfBytes = await doc.save();
+                downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), 'rotated_document.pdf');
+                showStatus(translations[currentLang].done);
+            } catch (err) {
+                showStatus('Error rotating pages', true);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function handleDeleteFile(file) {
+            if (!file) return;
+            deleteFile = file;
+            try {
+                const bytes = await file.arrayBuffer();
+                const doc = await PDFLib.PDFDocument.load(bytes);
+                const count = doc.getPageCount();
+                deleteFile.pageCount = count;
+                document.getElementById('lblHintDelete').innerText = `${file.name} (${count} ${translations[currentLang].pageCount})`;
+                document.getElementById('btnRunDelete').disabled = false;
+            } catch (e) {
+                showStatus('Invalid PDF file', true);
+            }
+        }
+
+        async function executeDelete() {
+            if (!deleteFile) return;
+            const rangeStr = document.getElementById('deleteRange').value.trim();
+            const indicesToDelete = new Set(parseRangeString(rangeStr, deleteFile.pageCount));
+
+            if (indicesToDelete.size === 0) {
+                showStatus(translations[currentLang].invalidPages, true);
+                return;
+            }
+
+            if (indicesToDelete.size >= deleteFile.pageCount) {
+                showStatus('Cannot delete all pages', true);
+                return;
+            }
+
+            const btn = document.getElementById('btnRunDelete');
+            btn.disabled = true;
+            showStatus(translations[currentLang].processing);
+
+            try {
+                const bytes = await deleteFile.arrayBuffer();
+                const srcDoc = await PDFLib.PDFDocument.load(bytes);
+                const newDoc = await PDFLib.PDFDocument.create();
+
+                const keepIndices = [];
+                for (let i = 0; i < deleteFile.pageCount; i++) {
+                    if (!indicesToDelete.has(i)) {
+                        keepIndices.push(i);
+                    }
+                }
+
+                const copiedPages = await newDoc.copyPages(srcDoc, keepIndices);
+                copiedPages.forEach(p => newDoc.addPage(p));
+
+                const pdfBytes = await newDoc.save();
+                downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), 'edited_document.pdf');
+                showStatus(translations[currentLang].done);
+            } catch (err) {
+                showStatus('Error deleting pages', true);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        document.querySelectorAll('.dropzone').forEach(dropzone => {
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.add('dragover');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.remove('dragover');
+                }, false);
+            });
+
+            dropzone.addEventListener('drop', e => {
+                const files = e.dataTransfer.files;
+                if (!files || files.length === 0) return;
+                const input = dropzone.querySelector('input[type="file"]');
+                if (input) {
+                    input.files = files;
+                    input.dispatchEvent(new Event('change'));
+                }
+            }, false);
+        });
+    </script>
+
+</body>
+
+</html>
