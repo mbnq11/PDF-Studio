@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PDF Studio Ultimate</title>
+    <title>PDF Studio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
@@ -375,22 +375,21 @@
 <body>
 
     <div class="header">
-        <div style="font-weight: 700; font-size: 15px;">PDF Studio Ultimate</div>
+        <div style="font-weight: 700; font-size: 15px;">PDF Studio</div>
         <button class="lang-btn" id="langSwitch" onclick="toggleLanguage()">English</button>
     </div>
 
     <div class="app-container">
         <div class="title-section">
-            <h1 id="appTitle">منصة أدوات PDF الشاملة والمتقدمة</h1>
+            <h1 id="appTitle">PDF Studio</h1>
             <div class="security-badge">
-                <span>معالجة فورية ومحلية 100% دون خوادم</span>
+                <span>معالجة محلية</span>
             </div>
         </div>
 
         <div class="upload-card" id="dropArea">
             <input type="file" id="fileInput" accept="application/pdf,image/png,image/jpeg" />
-            <div style="font-size: 14px; font-weight: 600;" id="uploadPrompt">اضغط لاختيار ملف PDF أو صور للدمج</div>
-            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">يدعم PDF المقفل بكلمة سر، والصور التلقائية</div>
+            <div style="font-size: 14px; font-weight: 600;">اختر ملف PDF أو صور</div>
         </div>
 
         <div class="active-file-card" id="activeFileCard">
@@ -410,45 +409,42 @@
 
         <div class="tabs-container" id="toolTabs">
             <button class="tab-btn active" data-tool="organize" onclick="setTool('organize')">ترتيب وتدوير</button>
-            <button class="tab-btn" data-tool="split" onclick="setTool('split')">تقسيم (ZIP)</button>
-            <button class="tab-btn" data-tool="signature" onclick="setTool('signature')">توقيع رقمي</button>
-            <button class="tab-btn" data-tool="stamps" onclick="setTool('stamps')">أختام رسمية</button>
-            <button class="tab-btn" data-tool="redact" onclick="setTool('redact')">حجب أمني</button>
+            <button class="tab-btn" data-tool="split" onclick="setTool('split')">تقسيم</button>
+            <button class="tab-btn" data-tool="signature" onclick="setTool('signature')">توقيع</button>
+            <button class="tab-btn" data-tool="stamps" onclick="setTool('stamps')">أختام</button>
+            <button class="tab-btn" data-tool="redact" onclick="setTool('redact')">حجب</button>
             <button class="tab-btn" data-tool="nup" onclick="setTool('nup')">دمج للطباعة</button>
             <button class="tab-btn" data-tool="excel" onclick="setTool('excel')">استخراج لـ Excel</button>
-            <button class="tab-btn" data-tool="compress" onclick="setTool('compress')">ضغط الحجم</button>
+            <button class="tab-btn" data-tool="compress" onclick="setTool('compress')">ضغط</button>
             <button class="tab-btn" data-tool="export" onclick="setTool('export')">تصدير (صور/نص)</button>
             <button class="tab-btn" data-tool="watermark" onclick="setTool('watermark')">علامة مائية</button>
-            <button class="tab-btn" data-tool="numbers" onclick="setTool('numbers')">ترقيم الصفحات</button>
+            <button class="tab-btn" data-tool="numbers" onclick="setTool('numbers')">ترقيم</button>
             <button class="tab-btn" data-tool="merge" onclick="setTool('merge')">دمج ملفات</button>
-            <button class="tab-btn" data-tool="clean" onclick="setTool('clean')">تنظيف الميتاداتا</button>
+            <button class="tab-btn" data-tool="clean" onclick="setTool('clean')">تنظيف</button>
         </div>
 
         <div class="tool-panel active" id="panelOrganize">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 12px; color: var(--text-secondary);">اسحب الكروت لإعادة الترتيب:</span>
+                <span style="font-size: 12px; color: var(--text-secondary);">السحب للترتيب:</span>
                 <button class="btn-action" style="width: auto; padding: 6px 12px; min-height: 32px; font-size: 12px;" onclick="applyPageOrganization()">حفظ الترتيب</button>
             </div>
             <div class="pages-grid" id="organizeGrid"></div>
         </div>
 
         <div class="tool-panel" id="panelSplit">
-            <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">
-                فصل جميع صفحات هذا المستند وتنزيل كل صفحة كملف PDF مستقل ومجمع داخل أرشيف ZIP واحد.
-            </p>
-            <button class="btn-action" onclick="runSplitToZip()">تقسيم وتنزيل الملفات (ZIP)</button>
+            <button class="btn-action" onclick="runSplitToZip()">تقسيم وتنزيل (ZIP)</button>
         </div>
 
         <div class="tool-panel" id="panelSignature">
             <div class="form-group">
-                <label>ارسم التوقيع:</label>
+                <label>الرسم:</label>
                 <div class="signature-box">
                     <canvas id="sigCanvas"></canvas>
                 </div>
                 <button class="btn-icon-text" style="align-self: flex-start;" onclick="clearSignature()">مسح اللوحة</button>
             </div>
             <div class="form-group">
-                <label>الصفحة المستهدفة:</label>
+                <label>الصفحة:</label>
                 <input type="number" id="sigPageNum" value="1" min="1" />
             </div>
             <div class="form-group">
@@ -459,120 +455,108 @@
                     <option value="bottom-center">أسفل المنتصف</option>
                 </select>
             </div>
-            <button class="btn-action" onclick="applySignature()">ختم التوقيع</button>
+            <button class="btn-action" onclick="applySignature()">تطبيق</button>
         </div>
 
         <div class="tool-panel" id="panelStamps">
             <div class="form-group">
-                <label>اختر نوع الختم:</label>
+                <label>الختم:</label>
                 <select id="stampType">
-                    <option value="معتمد / APPROVED">معتمد / APPROVED (أخضر)</option>
-                    <option value="سري للغاية / CONFIDENTIAL">سري للغاية / CONFIDENTIAL (أحمر)</option>
-                    <option value="مسودة / DRAFT">مسودة / DRAFT (برتقالي)</option>
-                    <option value="نسخة طبق الأصل / COPY">نسخة طبق الأصل / COPY (أزرق)</option>
+                    <option value="معتمد / APPROVED">معتمد / APPROVED</option>
+                    <option value="سري للغاية / CONFIDENTIAL">سري للغاية / CONFIDENTIAL</option>
+                    <option value="مسودة / DRAFT">مسودة / DRAFT</option>
+                    <option value="نسخة طبق الأصل / COPY">نسخة طبق الأصل / COPY</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>الصفحة المطلوبة:</label>
+                <label>الصفحة:</label>
                 <input type="number" id="stampPageNum" value="1" min="1" />
             </div>
-            <button class="btn-action" onclick="applyOfficialStamp()">إضافة الختم للمستند</button>
+            <button class="btn-action" onclick="applyOfficialStamp()">تطبيق</button>
         </div>
 
         <div class="tool-panel" id="panelRedact">
-            <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 8px;">
-                حجب شريط محدد بكتلة سوداء دائمة لمنع قراءة الأرقام أو الهويات الحساسة.
-            </p>
             <div class="form-group">
-                <label>رقم الصفحة للحجب:</label>
+                <label>الصفحة:</label>
                 <input type="number" id="redactPageNum" value="1" min="1" />
             </div>
             <div class="form-group">
-                <label>موضع الحجب التقريبي:</label>
+                <label>الموضع:</label>
                 <select id="redactPosition">
-                    <option value="top">أعلى الصفحة (الترويسة)</option>
+                    <option value="top">أعلى الصفحة</option>
                     <option value="middle">وسط الصفحة</option>
                     <option value="bottom">أسفل الصفحة</option>
                 </select>
             </div>
-            <button class="btn-action" onclick="runRedaction()">حجب وحفظ</button>
+            <button class="btn-action" onclick="runRedaction()">تطبيق</button>
         </div>
 
         <div class="tool-panel" id="panelNup">
-            <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">
-                دمج هندسي متقدم: دمج كل صفحتين في صفحة واحدة أفقية مع الحفاظ على جودة النصوص للطباعة.
-            </p>
             <button class="btn-action" onclick="runNUpMerge()">دمج للطباعة</button>
         </div>
 
         <div class="tool-panel" id="panelExcel">
-            <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">
-                استخراج النصوص وتصديرها كجداول CSV متوافقة مع Excel.
-            </p>
-            <button class="btn-action" onclick="runExtractToExcel()">استخراج الجداول (CSV)</button>
+            <button class="btn-action" onclick="runExtractToExcel()">استخراج (CSV)</button>
         </div>
 
         <div class="tool-panel" id="panelCompress">
             <div class="form-group">
-                <label>مستوى الضغط:</label>
+                <label>المستوى:</label>
                 <select id="compressQuality">
-                    <option value="0.75">متوازن (جودة ممتازة - حجم أقل)</option>
-                    <option value="0.45">قوي (أصغر حجم ممكن للجوال)</option>
+                    <option value="0.75">متوازن</option>
+                    <option value="0.45">قوي</option>
                 </select>
             </div>
-            <button class="btn-action" onclick="runCompression()">بدء ضغط الملف</button>
+            <button class="btn-action" onclick="runCompression()">تطبيق</button>
         </div>
 
         <div class="tool-panel" id="panelExport">
-            <button class="btn-action" style="margin-bottom: 8px;" onclick="exportToImages()">تصدير الصفحات كصور (ZIP)</button>
-            <button class="btn-action btn-outline" onclick="exportToText()">استخراج جميع النصوص (TXT)</button>
+            <button class="btn-action" style="margin-bottom: 8px;" onclick="exportToImages()">تصدير صور (ZIP)</button>
+            <button class="btn-action btn-outline" onclick="exportToText()">استخراج نصوص (TXT)</button>
         </div>
 
         <div class="tool-panel" id="panelWatermark">
             <div class="form-group">
-                <label>نص العلامة المائية:</label>
+                <label>النص:</label>
                 <input type="text" id="watermarkInput" placeholder="سري / CONFIDENTIAL" />
             </div>
             <div class="form-group">
-                <label>أو علامة مائية بصورة (PNG شفاف):</label>
+                <label>أو صورة:</label>
                 <input type="file" id="wmImageInput" accept="image/png,image/jpeg" />
             </div>
-            <button class="btn-action" onclick="runWatermark()">تطبيق العلامة المائية</button>
+            <button class="btn-action" onclick="runWatermark()">تطبيق</button>
         </div>
 
         <div class="tool-panel" id="panelNumbers">
             <div class="form-group">
-                <label>مكان الترقيم:</label>
+                <label>الموضع:</label>
                 <select id="numbersPosition">
                     <option value="bottom-center">أسفل المنتصف</option>
                     <option value="bottom-right">أسفل اليمين</option>
                     <option value="bottom-left">أسفل اليسار</option>
                 </select>
             </div>
-            <button class="btn-action" onclick="runPageNumbers()">ترقيم الملف</button>
+            <button class="btn-action" onclick="runPageNumbers()">تطبيق</button>
         </div>
 
         <div class="tool-panel" id="panelMerge">
             <div class="form-group">
-                <label>اختر ملفات PDF لدمجها مع الحالي:</label>
+                <label>الملفات:</label>
                 <input type="file" id="mergeFileInput" accept="application/pdf" multiple />
             </div>
-            <button class="btn-action" onclick="runMerge()">دمج الملفات المحددة</button>
+            <button class="btn-action" onclick="runMerge()">دمج</button>
         </div>
 
         <div class="tool-panel" id="panelClean">
-            <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">
-                مسح أسماء الأجهزة، الكُتّاب، والبرمجيات المنشئة للمستند لضمان السرية والخصوصية.
-            </p>
             <button class="btn-action" onclick="runCleanMetadata()">تنظيف وتصدير</button>
         </div>
 
         <div class="comparison-card" id="resultCard">
-            <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 4px;">تمت المعالجة بنجاح</div>
+            <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 4px;">تمت المعالجة</div>
             <div style="font-size: 12px; color: var(--text-secondary);" id="resultMeta">-</div>
             <div class="download-group">
-                <button class="btn-action" style="background: var(--accent-green);" onclick="downloadResult()">تنزيل الملف الناتج</button>
-                <button class="btn-action btn-outline" onclick="applyAsActiveFile()">متابعة التعديل عليه</button>
+                <button class="btn-action" style="background: var(--accent-green);" onclick="downloadResult()">تنزيل</button>
+                <button class="btn-action btn-outline" onclick="applyAsActiveFile()">متابعة التعديل</button>
             </div>
         </div>
     </div>
@@ -620,13 +604,13 @@
             try {
                 await PDFLib.PDFDocument.load(originalBytes);
             } catch (err) {
-                const pass = prompt('هذا المستند محمي بكلمة سر، فضلاً أدخل كلمة المرور:');
+                const pass = prompt('الرقم السري:');
                 if (pass) {
                     try {
                         const unlockedDoc = await PDFLib.PDFDocument.load(originalBytes, { password: pass });
                         originalBytes = await unlockedDoc.save();
                     } catch (e2) {
-                        alert('كلمة المرور غير صحيحة');
+                        alert('خطأ في الرقم السري');
                         return;
                     }
                 } else {
@@ -661,7 +645,7 @@
 
         function updateMetaDisplay(bytesLen, count) {
             const size = (bytesLen / (1024 * 1024)).toFixed(2);
-            document.getElementById('displayFileMeta').innerText = `${size} MB • ${count} صفحات`;
+            document.getElementById('displayFileMeta').innerText = size + ' MB • ' + count + ' صفحات';
         }
 
         function resetFile() {
@@ -784,7 +768,7 @@
                 const [page] = await singleDoc.copyPages(srcDoc, [i]);
                 singleDoc.addPage(page);
                 const bytes = await singleDoc.save();
-                zip.file(`page_${i + 1}.pdf`, bytes);
+                zip.file('page_' + (i + 1) + '.pdf', bytes);
                 setProgress(20 + Math.round(((i + 1) / total) * 70));
             }
 
@@ -794,7 +778,7 @@
 
             const link = document.createElement('a');
             link.href = URL.createObjectURL(zipBlob);
-            link.download = `${originalFileName.replace('.pdf', '')}_split.zip`;
+            link.download = originalFileName.replace('.pdf', '') + '_split.zip';
             link.click();
         }
 
@@ -976,14 +960,14 @@
                 }
 
                 const sortedY = Object.keys(lines).map(Number).sort((a, b) => b - a);
-                if (!isCsv) finalOutput += `--- الصفحة [${i}] ---\n`;
+                if (!isCsv) finalOutput += '--- الصفحة ' + i + ' ---\n';
 
                 for (const y of sortedY) {
                     const lineItems = lines[y].sort((a, b) => b.x - a.x);
                     const lineStr = lineItems.map(it => it.str.trim()).filter(Boolean);
 
                     if (isCsv) {
-                        const csvLine = lineStr.map(s => `"${s.replace(/"/g, '""')}"`).join(',');
+                        const csvLine = lineStr.map(s => '"' + s.replace(/"/g, '""') + '"').join(',');
                         finalOutput += csvLine + '\r\n';
                     } else {
                         finalOutput += lineStr.join(' ') + '\n';
@@ -1000,7 +984,7 @@
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `${originalFileName.replace('.pdf', '')}_extracted.csv`;
+            link.download = originalFileName.replace('.pdf', '') + '_extracted.csv';
             link.click();
             setProgress(100);
             setTimeout(() => setProgress(0), 400);
@@ -1012,7 +996,7 @@
             const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `${originalFileName.replace('.pdf', '')}_text.txt`;
+            link.download = originalFileName.replace('.pdf', '') + '_text.txt';
             link.click();
             setProgress(100);
             setTimeout(() => setProgress(0), 400);
@@ -1032,7 +1016,7 @@
                 await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
 
                 const base64Data = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
-                zip.file(`page_${i}.jpg`, base64Data, {base64: true});
+                zip.file('page_' + i + '.jpg', base64Data, {base64: true});
                 setProgress(20 + Math.round((i / pdf.numPages) * 60));
             }
             
@@ -1042,7 +1026,7 @@
 
             const link = document.createElement('a');
             link.href = URL.createObjectURL(zipBlob);
-            link.download = `${originalFileName.replace('.pdf', '')}_images.zip`;
+            link.download = originalFileName.replace('.pdf', '') + '_images.zip';
             link.click();
         }
 
@@ -1170,7 +1154,7 @@
             const resDoc = await PDFLib.PDFDocument.load(resultPdfBytes);
             const count = resDoc.getPageCount();
             const size = (resultPdfBytes.length / (1024 * 1024)).toFixed(2);
-            document.getElementById('resultMeta').innerText = `الحجم النهائي: ${size} MB • عدد الصفحات: ${count}`;
+            document.getElementById('resultMeta').innerText = size + ' MB • ' + count + ' صفحات';
             card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
@@ -1179,7 +1163,7 @@
             const blob = new Blob([resultPdfBytes], { type: 'application/pdf' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `processed_${originalFileName || 'document.pdf'}`;
+            link.download = originalFileName ? 'processed_' + originalFileName : 'document.pdf';
             link.click();
             URL.revokeObjectURL(link.href);
         }
@@ -1197,7 +1181,6 @@
             document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             document.documentElement.lang = currentLang;
             document.getElementById('langSwitch').innerText = currentLang === 'ar' ? 'English' : 'العربية';
-            document.getElementById('appTitle').innerText = currentLang === 'ar' ? 'منصة أدوات PDF الشاملة والمتقدمة' : 'PDF Studio Ultimate';
         }
     </script>
 </body>
