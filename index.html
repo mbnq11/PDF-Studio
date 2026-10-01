@@ -62,7 +62,7 @@
         .page-card-actions { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
         .page-card-actions-row { display: flex; justify-content: space-between; align-items: center; }
         
-        .signature-box { border: 2px dashed var(--border-color); border-radius: 10px; background: #ffffff; position: relative; margin-bottom: 8px; touch-action: none; cursor: crosshair; }
+        .signature-box { border: 2px dashed var(--border-color); border-radius: 10px; background: #ffffff; position: relative; touch-action: none; cursor: crosshair; }
         #sigCanvas { width: 100%; height: 160px; display: block; border-radius: 10px; }
         
         .progress-container { display: none; width: 100%; background: #eee; border-radius: 980px; height: 8px; margin: 10px 0; overflow: hidden; }
@@ -128,7 +128,6 @@
             <button class="tab-btn" data-tool="clean" onclick="setTool('clean')">تنظيف الخصائص</button>
         </div>
 
-        <!-- الترتيب -->
         <div class="tool-panel active" id="panelOrganize">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <span style="font-size: 12px; color: var(--text-secondary);">اسحب لتغيير الترتيب:</span>
@@ -137,20 +136,26 @@
             <div class="pages-grid" id="organizeGrid"></div>
         </div>
 
-        <!-- التوقيع المخصص -->
         <div class="tool-panel" id="panelSignature">
             <div class="form-group">
                 <label>ارسم التوقيع:</label>
                 <div class="signature-box">
                     <canvas id="sigCanvas"></canvas>
                 </div>
-                <div style="display: flex; gap: 8px; justify-content: space-between;">
+                <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center; flex-wrap: wrap;">
                     <button class="btn-icon-text" onclick="clearSignature()">مسح اللوحة</button>
-                    <select id="sigColor" onchange="updateSigColor()" style="width: auto; padding: 4px 8px; height: 32px;">
-                        <option value="#000000">قلم أسود</option>
-                        <option value="#0071e3">قلم أزرق</option>
-                        <option value="#ff3b30">قلم أحمر</option>
-                    </select>
+                    <div style="display: flex; gap: 8px;">
+                        <select id="sigPenType" onchange="updateSigPenStyle()" style="width: auto; padding: 4px 8px; height: 32px; font-size: 12px;">
+                            <option value="fountain">قلم ريشة</option>
+                            <option value="ballpoint">قلم جاف</option>
+                            <option value="marker">قلم خطاط</option>
+                        </select>
+                        <select id="sigColor" onchange="updateSigPenStyle()" style="width: auto; padding: 4px 8px; height: 32px; font-size: 12px;">
+                            <option value="#000000">أسود</option>
+                            <option value="#0071e3">أزرق</option>
+                            <option value="#ff3b30">أحمر</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
@@ -184,7 +189,6 @@
             <button class="btn-action" onclick="applySignature()">ختم التوقيع فوراً</button>
         </div>
 
-        <!-- الختم المخصص -->
         <div class="tool-panel" id="panelStamps">
             <div class="form-group">
                 <label>نص الختم (مخصص):</label>
@@ -222,7 +226,6 @@
             <button class="btn-action" onclick="applyOfficialStamp()">إضافة الختم فوراً</button>
         </div>
 
-        <!-- باقي الأدوات -->
         <div class="tool-panel" id="panelSplit">
             <button class="btn-action" onclick="runSplitToZip()">تقسيم المستند وتنزيل (ZIP)</button>
         </div>
@@ -393,7 +396,7 @@
             if(rect.width > 0) {
                 sigCanvas.width = rect.width;
                 sigCanvas.height = 160;
-                updateSigColor();
+                updateSigPenStyle();
             }
         }
 
@@ -462,23 +465,57 @@
             showToast('تم تثبيت الترتيب');
         }
 
-        // ============ نظام التوقيع المخصص ============
         let sigCanvas, sigCtx, isDrawing = false;
+        let lastX = 0, lastY = 0, lastTime = 0;
+
         function initSignaturePad() {
             sigCanvas = document.getElementById('sigCanvas');
             sigCtx = sigCanvas.getContext('2d');
             
-            const start = (e) => { isDrawing = true; sigCtx.beginPath(); draw(e); };
-            const end = () => { isDrawing = false; sigCtx.beginPath(); };
+            const start = (e) => { 
+                isDrawing = true; 
+                const rect = sigCanvas.getBoundingClientRect();
+                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                lastX = (clientX - rect.left) * (sigCanvas.width / rect.width);
+                lastY = (clientY - rect.top) * (sigCanvas.height / rect.height);
+                lastTime = Date.now();
+                updateSigPenStyle();
+            };
+
+            const end = () => { isDrawing = false; };
+            
             const draw = (e) => {
                 if (!isDrawing) return;
                 const rect = sigCanvas.getBoundingClientRect();
                 const clientX = e.clientX || (e.touches && e.touches[0].clientX);
                 const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-                const scaleX = sigCanvas.width / rect.width;
-                const scaleY = sigCanvas.height / rect.height;
-                sigCtx.lineTo((clientX - rect.left) * scaleX, (clientY - rect.top) * scaleY);
+                const currentX = (clientX - rect.left) * (sigCanvas.width / rect.width);
+                const currentY = (clientY - rect.top) * (sigCanvas.height / rect.height);
+                const currTime = Date.now();
+                
+                const penType = document.getElementById('sigPenType').value;
+                let lineWidth = 2.5;
+                
+                if (penType === 'fountain') {
+                    const dt = currTime - lastTime || 1;
+                    const dx = currentX - lastX;
+                    const dy = currentY - lastY;
+                    const speed = Math.sqrt(dx*dx + dy*dy) / dt;
+                    lineWidth = Math.max(1.5, 6 - speed); 
+                } else if (penType === 'marker') {
+                    lineWidth = 8;
+                }
+
+                sigCtx.lineWidth = lineWidth;
+                sigCtx.beginPath();
+                sigCtx.moveTo(lastX, lastY);
+                sigCtx.lineTo(currentX, currentY);
                 sigCtx.stroke();
+
+                lastX = currentX;
+                lastY = currentY;
+                lastTime = currTime;
             };
 
             sigCanvas.addEventListener('mousedown', start);
@@ -490,11 +527,14 @@
         }
 
         function clearSignature() { if (sigCtx) sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height); }
-        function updateSigColor() {
+        
+        function updateSigPenStyle() {
             if(!sigCtx) return;
+            const penType = document.getElementById('sigPenType').value;
             sigCtx.strokeStyle = document.getElementById('sigColor').value;
-            sigCtx.lineWidth = 3;
-            sigCtx.lineCap = 'round';
+            sigCtx.lineJoin = 'round';
+            sigCtx.lineCap = penType === 'marker' ? 'square' : 'round';
+            sigCtx.globalAlpha = penType === 'marker' ? 0.7 : 1.0;
         }
 
         function getCalculatedPosition(posString, pageW, pageH, itemW, itemH) {
@@ -528,7 +568,6 @@
             showToast('تم إضافة التوقيع بنجاح');
         }
 
-        // ============ نظام الأختام المخصص ============
         async function applyOfficialStamp() {
             const stampText = document.getElementById('customStampText').value || 'معتمد';
             const color = document.getElementById('stampColor').value;
@@ -565,7 +604,6 @@
             showToast('تم ختم المستند بنجاح');
         }
 
-        // ============ باقي الأدوات ============
         async function runRedaction() {
             const pdfDoc = await PDFLib.PDFDocument.load(originalBytes);
             const pIdx = Math.max(0, parseInt(document.getElementById('redactPageNum').value) - 1);
