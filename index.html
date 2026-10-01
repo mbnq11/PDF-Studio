@@ -18,7 +18,6 @@
             --accent-blue: #0071e3;
             --accent-green: #34c759;
             --accent-red: #ff3b30;
-            --accent-purple: #af52de;
             --radius-main: 18px;
             --radius-btn: 12px;
         }
@@ -95,12 +94,6 @@
             font-weight: 600;
         }
 
-        .security-badge svg {
-            width: 13px;
-            height: 13px;
-            fill: currentColor;
-        }
-
         .upload-card {
             border: 2px dashed rgba(0, 113, 227, 0.3);
             background: #ffffff;
@@ -132,15 +125,13 @@
             gap: 8px;
         }
 
-        .file-icon {
-            width: 36px;
-            height: 36px;
+        .file-icon-text {
             background: rgba(0, 113, 227, 0.1);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
+            color: var(--accent-blue);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: bold;
             flex-shrink: 0;
         }
 
@@ -246,19 +237,21 @@
             cursor: pointer;
         }
 
-        .btn-icon {
+        .btn-icon-text {
             background: #f0f0f2;
             border: none;
             border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 11.5px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 600;
             cursor: pointer;
+            color: var(--text-primary);
         }
 
         .pages-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 12px;
             margin-top: 10px;
             max-height: 380px;
             overflow-y: auto;
@@ -269,7 +262,7 @@
             background: #fbfbfd;
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 6px;
+            padding: 8px;
             text-align: center;
             cursor: grab;
             position: relative;
@@ -287,15 +280,20 @@
             border-radius: 6px;
             background: #ffffff;
             pointer-events: none;
+            border: 1px solid #eee;
         }
 
         .page-card-actions {
             display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .page-card-actions-row {
+            display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 6px;
-            font-size: 11px;
-            font-weight: 600;
         }
 
         .signature-box {
@@ -385,7 +383,6 @@
         <div class="title-section">
             <h1 id="appTitle">منصة أدوات PDF الشاملة والمتقدمة</h1>
             <div class="security-badge">
-                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
                 <span>معالجة فورية ومحلية 100% دون خوادم</span>
             </div>
         </div>
@@ -398,7 +395,7 @@
 
         <div class="active-file-card" id="activeFileCard">
             <div style="display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
-                <div class="file-icon">📑</div>
+                <div class="file-icon-text">ملف</div>
                 <div style="min-width: 0; flex: 1;">
                     <div style="font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="displayFileName">-</div>
                     <div style="font-size: 11px; color: var(--text-secondary);" id="displayFileMeta">-</div>
@@ -417,7 +414,7 @@
             <button class="tab-btn" data-tool="signature" onclick="setTool('signature')">توقيع رقمي</button>
             <button class="tab-btn" data-tool="stamps" onclick="setTool('stamps')">أختام رسمية</button>
             <button class="tab-btn" data-tool="redact" onclick="setTool('redact')">حجب أمني</button>
-            <button class="tab-btn" data-tool="nup" onclick="setTool('nup')">دمج للطباعة (2x1)</button>
+            <button class="tab-btn" data-tool="nup" onclick="setTool('nup')">دمج للطباعة</button>
             <button class="tab-btn" data-tool="excel" onclick="setTool('excel')">استخراج لـ Excel</button>
             <button class="tab-btn" data-tool="compress" onclick="setTool('compress')">ضغط الحجم</button>
             <button class="tab-btn" data-tool="export" onclick="setTool('export')">تصدير (صور/نص)</button>
@@ -439,7 +436,7 @@
             <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">
                 فصل جميع صفحات هذا المستند وتنزيل كل صفحة كملف PDF مستقل ومجمع داخل أرشيف ZIP واحد.
             </p>
-            <button class="btn-action" onclick="runSplitToZip()">تقسيم وتنزيل ZIP</button>
+            <button class="btn-action" onclick="runSplitToZip()">تقسيم وتنزيل الملفات (ZIP)</button>
         </div>
 
         <div class="tool-panel" id="panelSignature">
@@ -448,7 +445,7 @@
                 <div class="signature-box">
                     <canvas id="sigCanvas"></canvas>
                 </div>
-                <button class="btn-icon" style="align-self: flex-start;" onclick="clearSignature()">مسح</button>
+                <button class="btn-icon-text" style="align-self: flex-start;" onclick="clearSignature()">مسح اللوحة</button>
             </div>
             <div class="form-group">
                 <label>الصفحة المستهدفة:</label>
@@ -503,16 +500,16 @@
 
         <div class="tool-panel" id="panelNup">
             <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">
-                تحويل كل صفحتين متتاليتين إلى صفحة واحدة أفقية (A4 Landscape) لتوفير الحبر والورق أثناء الطباعة.
+                دمج هندسي متقدم: دمج كل صفحتين في صفحة واحدة أفقية مع الحفاظ على جودة النصوص للطباعة.
             </p>
-            <button class="btn-action" onclick="runNUpMerge()">دمج 2 في 1 للطباعة</button>
+            <button class="btn-action" onclick="runNUpMerge()">دمج للطباعة</button>
         </div>
 
         <div class="tool-panel" id="panelExcel">
             <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">
-                فحص طبقة النصوص واستخراج الأسطر المنظمة كملف CSV قابل للفتح المباشر في Microsoft Excel.
+                استخراج النصوص وتصديرها كجداول CSV متوافقة مع Excel.
             </p>
-            <button class="btn-action" onclick="runExtractToExcel()">استخراج وتحميل CSV / Excel</button>
+            <button class="btn-action" onclick="runExtractToExcel()">استخراج الجداول (CSV)</button>
         </div>
 
         <div class="tool-panel" id="panelCompress">
@@ -527,7 +524,7 @@
         </div>
 
         <div class="tool-panel" id="panelExport">
-            <button class="btn-action" style="margin-bottom: 8px;" onclick="exportToImages()">تصدير الصفحات كصور JPG</button>
+            <button class="btn-action" style="margin-bottom: 8px;" onclick="exportToImages()">تصدير الصفحات كصور (ZIP)</button>
             <button class="btn-action btn-outline" onclick="exportToText()">استخراج جميع النصوص (TXT)</button>
         </div>
 
@@ -560,7 +557,7 @@
                 <label>اختر ملفات PDF لدمجها مع الحالي:</label>
                 <input type="file" id="mergeFileInput" accept="application/pdf" multiple />
             </div>
-            <button class="btn-action" onclick="runMerge()">دمج الكل</button>
+            <button class="btn-action" onclick="runMerge()">دمج الملفات المحددة</button>
         </div>
 
         <div class="tool-panel" id="panelClean">
@@ -571,7 +568,7 @@
         </div>
 
         <div class="comparison-card" id="resultCard">
-            <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 4px;">تمت المعالجة بنجاح 🎉</div>
+            <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 4px;">تمت المعالجة بنجاح</div>
             <div style="font-size: 12px; color: var(--text-secondary);" id="resultMeta">-</div>
             <div class="download-group">
                 <button class="btn-action" style="background: var(--accent-green);" onclick="downloadResult()">تنزيل الملف الناتج</button>
@@ -629,7 +626,7 @@
                         const unlockedDoc = await PDFLib.PDFDocument.load(originalBytes, { password: pass });
                         originalBytes = await unlockedDoc.save();
                     } catch (e2) {
-                        alert('كلمة المرور غير صحيحة!');
+                        alert('كلمة المرور غير صحيحة');
                         return;
                     }
                 } else {
@@ -680,11 +677,27 @@
             document.getElementById('resultCard').style.display = 'none';
         }
 
+        function resizeSignaturePad() {
+            if(!sigCanvas) return;
+            const rect = sigCanvas.parentElement.getBoundingClientRect();
+            if(rect.width > 0) {
+                sigCanvas.width = rect.width;
+                sigCanvas.height = 140;
+                sigCtx.lineWidth = 2.5;
+                sigCtx.lineCap = 'round';
+                sigCtx.strokeStyle = '#000000';
+            }
+        }
+
         function setTool(toolName) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tool === toolName));
             document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
             const target = document.getElementById('panel' + toolName.charAt(0).toUpperCase() + toolName.slice(1));
             if (target) target.classList.add('active');
+
+            if (toolName === 'signature') {
+                setTimeout(resizeSignaturePad, 50);
+            }
         }
 
         async function renderOrganizeGrid() {
@@ -707,12 +720,15 @@
                 await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
 
                 card.appendChild(canvas);
+                
                 const actions = document.createElement('div');
                 actions.className = 'page-card-actions';
                 actions.innerHTML = `
-                    <span>#${i + 1}</span>
-                    <button class="btn-icon" onclick="rotatePageDirect(${i})">⟳</button>
-                    <button class="btn-danger" onclick="removeSinglePage(${i})">✕</button>
+                    <div style="font-size: 12px; font-weight: bold; color: var(--text-secondary);">صفحة ${i + 1}</div>
+                    <div class="page-card-actions-row">
+                        <button class="btn-icon-text" onclick="rotatePageDirect(${i})">تدوير</button>
+                        <button class="btn-danger" onclick="removeSinglePage(${i})">حذف</button>
+                    </div>
                 `;
                 card.appendChild(actions);
                 grid.appendChild(card);
@@ -778,7 +794,7 @@
 
             const link = document.createElement('a');
             link.href = URL.createObjectURL(zipBlob);
-            link.download = `${originalFileName.replace('.pdf', '')}_split_pages.zip`;
+            link.download = `${originalFileName.replace('.pdf', '')}_split.zip`;
             link.click();
         }
 
@@ -786,12 +802,7 @@
         function initSignaturePad() {
             sigCanvas = document.getElementById('sigCanvas');
             sigCtx = sigCanvas.getContext('2d');
-            sigCanvas.width = sigCanvas.parentElement.clientWidth;
-            sigCanvas.height = 140;
-            sigCtx.lineWidth = 2.5;
-            sigCtx.lineCap = 'round';
-            sigCtx.strokeStyle = '#000000';
-
+            
             const start = (e) => { isDrawing = true; sigCtx.beginPath(); draw(e); };
             const end = () => { isDrawing = false; sigCtx.beginPath(); };
             const draw = (e) => {
@@ -799,7 +810,11 @@
                 const rect = sigCanvas.getBoundingClientRect();
                 const clientX = e.clientX || (e.touches && e.touches[0].clientX);
                 const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-                sigCtx.lineTo(clientX - rect.left, clientY - rect.top);
+                
+                const scaleX = sigCanvas.width / rect.width;
+                const scaleY = sigCanvas.height / rect.height;
+                
+                sigCtx.lineTo((clientX - rect.left) * scaleX, (clientY - rect.top) * scaleY);
                 sigCtx.stroke();
             };
 
@@ -901,31 +916,37 @@
 
         async function runNUpMerge() {
             setProgress(30);
-            const pdf = await pdfjsLib.getDocument({ data: originalBytes.slice() }).promise;
+            const srcDoc = await PDFLib.PDFDocument.load(originalBytes);
             const newDoc = await PDFLib.PDFDocument.create();
-            const total = pdf.numPages;
-
-            for (let i = 1; i <= total; i += 2) {
+            const pages = srcDoc.getPages();
+            
+            for (let i = 0; i < pages.length; i += 2) {
                 const pageA4 = newDoc.addPage([842, 595]);
+                const p1 = pages[i];
+                const { width: w1, height: h1 } = p1.getSize();
+                const scale1 = Math.min(385 / w1, 535 / h1);
+                
+                const embedded1 = await newDoc.embedPage(p1);
+                pageA4.drawPage(embedded1, { 
+                    x: 20 + (385 - w1 * scale1) / 2, 
+                    y: 30 + (535 - h1 * scale1) / 2, 
+                    xScale: scale1, 
+                    yScale: scale1 
+                });
 
-                const p1 = await pdf.getPage(i);
-                const vp1 = p1.getViewport({ scale: 1.0 });
-                const c1 = document.createElement('canvas');
-                c1.width = vp1.width; c1.height = vp1.height;
-                await p1.render({ canvasContext: c1.getContext('2d'), viewport: vp1 }).promise;
-                const img1 = await newDoc.embedJpg(c1.toDataURL('image/jpeg', 0.8));
-                pageA4.drawImage(img1, { x: 20, y: 30, width: 385, height: 535 });
-
-                if (i + 1 <= total) {
-                    const p2 = await pdf.getPage(i + 1);
-                    const vp2 = p2.getViewport({ scale: 1.0 });
-                    const c2 = document.createElement('canvas');
-                    c2.width = vp2.width; c2.height = vp2.height;
-                    await p2.render({ canvasContext: c2.getContext('2d'), viewport: vp2 }).promise;
-                    const img2 = await newDoc.embedJpg(c2.toDataURL('image/jpeg', 0.8));
-                    pageA4.drawImage(img2, { x: 435, y: 30, width: 385, height: 535 });
+                if (i + 1 < pages.length) {
+                    const p2 = pages[i + 1];
+                    const { width: w2, height: h2 } = p2.getSize();
+                    const scale2 = Math.min(385 / w2, 535 / h2);
+                    const embedded2 = await newDoc.embedPage(p2);
+                    pageA4.drawPage(embedded2, { 
+                        x: 435 + (385 - w2 * scale2) / 2, 
+                        y: 30 + (535 - h2 * scale2) / 2, 
+                        xScale: scale2, 
+                        yScale: scale2 
+                    });
                 }
-                setProgress(30 + Math.round((i / total) * 60));
+                setProgress(30 + Math.round((i / pages.length) * 60));
             }
 
             resultPdfBytes = await newDoc.save();
@@ -934,32 +955,94 @@
             showResultCard();
         }
 
-        async function runExtractToExcel() {
-            const pdf = await pdfjsLib.getDocument({ data: originalBytes.slice() }).promise;
-            let csvContent = '\uFEFF';
+        async function extractSmartTextFromPDF(pdfBytes, isCsv = false) {
+            const pdf = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
+            let finalOutput = isCsv ? '\uFEFF' : '';
 
             for (let i = 1; i <= pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
                 const textContent = await page.getTextContent();
-                let lastY = null;
-                let line = [];
-
-                for (let item of textContent.items) {
-                    if (lastY === null || Math.abs(item.transform[5] - lastY) < 6) {
-                        line.push(`"${item.str.replace(/"/g, '""')}"`);
-                    } else {
-                        csvContent += line.join(',') + '\r\n';
-                        line = [`"${item.str.replace(/"/g, '""')}"`];
-                    }
-                    lastY = item.transform[5];
+                
+                const lines = {};
+                for (const item of textContent.items) {
+                    if (!item.str.trim()) continue;
+                    const y = Math.round(item.transform[5] / 5) * 5;
+                    
+                    if (!lines[y]) lines[y] = [];
+                    lines[y].push({
+                        str: item.str,
+                        x: item.transform[4]
+                    });
                 }
-                if (line.length) csvContent += line.join(',') + '\r\n';
-            }
 
+                const sortedY = Object.keys(lines).map(Number).sort((a, b) => b - a);
+                if (!isCsv) finalOutput += `--- الصفحة [${i}] ---\n`;
+
+                for (const y of sortedY) {
+                    const lineItems = lines[y].sort((a, b) => b.x - a.x);
+                    const lineStr = lineItems.map(it => it.str.trim()).filter(Boolean);
+
+                    if (isCsv) {
+                        const csvLine = lineStr.map(s => `"${s.replace(/"/g, '""')}"`).join(',');
+                        finalOutput += csvLine + '\r\n';
+                    } else {
+                        finalOutput += lineStr.join(' ') + '\n';
+                    }
+                }
+                if (!isCsv) finalOutput += '\n\n';
+            }
+            return finalOutput;
+        }
+
+        async function runExtractToExcel() {
+            setProgress(50);
+            const csvContent = await extractSmartTextFromPDF(originalBytes, true);
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `${originalFileName.replace('.pdf', '')}_extracted.csv`;
+            link.click();
+            setProgress(100);
+            setTimeout(() => setProgress(0), 400);
+        }
+
+        async function exportToText() {
+            setProgress(50);
+            const textContent = await extractSmartTextFromPDF(originalBytes, false);
+            const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${originalFileName.replace('.pdf', '')}_text.txt`;
+            link.click();
+            setProgress(100);
+            setTimeout(() => setProgress(0), 400);
+        }
+
+        async function exportToImages() {
+            setProgress(20);
+            const zip = new JSZip();
+            const pdf = await pdfjsLib.getDocument({ data: originalBytes.slice() }).promise;
+            
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.createElement('canvas');
+                canvas.width = viewport.width; 
+                canvas.height = viewport.height;
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+                const base64Data = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
+                zip.file(`page_${i}.jpg`, base64Data, {base64: true});
+                setProgress(20 + Math.round((i / pdf.numPages) * 60));
+            }
+            
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            setProgress(100);
+            setTimeout(() => setProgress(0), 400);
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(zipBlob);
+            link.download = `${originalFileName.replace('.pdf', '')}_images.zip`;
             link.click();
         }
 
@@ -986,37 +1069,6 @@
             setProgress(100);
             setTimeout(() => setProgress(0), 400);
             showResultCard();
-        }
-
-        async function exportToImages() {
-            const pdf = await pdfjsLib.getDocument({ data: originalBytes.slice() }).promise;
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const viewport = page.getViewport({ scale: 1.4 });
-                const canvas = document.createElement('canvas');
-                canvas.width = viewport.width; canvas.height = viewport.height;
-                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-
-                const link = document.createElement('a');
-                link.download = `page_${i}.jpg`;
-                link.href = canvas.toDataURL('image/jpeg', 0.9);
-                link.click();
-            }
-        }
-
-        async function exportToText() {
-            const pdf = await pdfjsLib.getDocument({ data: originalBytes.slice() }).promise;
-            let fullText = '';
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const textContent = await page.getTextContent();
-                fullText += `--- الصفحة [${i}] ---\n` + textContent.items.map(it => it.str).join(' ') + '\n\n';
-            }
-            const blob = new Blob([fullText], { type: 'text/plain;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `${originalFileName.replace('.pdf', '')}_text.txt`;
-            link.click();
         }
 
         async function runWatermark() {
@@ -1064,7 +1116,7 @@
 
             pages.forEach((p, idx) => {
                 const { width } = p.getSize();
-                const str = `${idx + 1} / ${pages.length}`;
+                const str = (idx + 1) + " / " + pages.length;
                 let x = width / 2 - 15;
                 if (pos === 'bottom-right') x = width - 60;
                 else if (pos === 'bottom-left') x = 30;
