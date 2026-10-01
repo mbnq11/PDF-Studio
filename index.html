@@ -22,357 +22,63 @@
             --radius-btn: 12px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-        }
-
-        .header {
-            width: 100%;
-            max-width: 920px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            padding: 4px;
-        }
-
-        .lang-btn {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 980px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 920px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-main);
-            padding: 16px 14px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            margin-bottom: 16px;
-        }
-
-        .title-section {
-            text-align: center;
-            margin-bottom: 14px;
-        }
-
-        h1 {
-            font-size: 21px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .security-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(52, 199, 89, 0.12);
-            color: #1b8738;
-            padding: 4px 12px;
-            border-radius: 980px;
-            font-size: 11.5px;
-            font-weight: 600;
-        }
-
-        .upload-card {
-            border: 2px dashed rgba(0, 113, 227, 0.3);
-            background: #ffffff;
-            border-radius: 14px;
-            padding: 24px 14px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .upload-card input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-
-        .active-file-card {
-            display: none;
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 10px 12px;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 14px;
-            gap: 8px;
-        }
-
-        .file-icon-text {
-            background: rgba(0, 113, 227, 0.1);
-            color: var(--accent-blue);
-            border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 12px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .tabs-container {
-            display: none;
-            overflow-x: auto;
-            white-space: nowrap;
-            gap: 6px;
-            padding-bottom: 8px;
-            margin-bottom: 14px;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .tabs-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            padding: 8px 14px;
-            border-radius: 980px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .tab-btn.active {
-            background: var(--accent-blue);
-            color: #ffffff;
-            border-color: var(--accent-blue);
-        }
-
-        .tool-panel {
-            display: none;
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 14px;
-        }
-
-        .tool-panel.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        label {
-            font-size: 12.5px;
-            font-weight: 600;
-        }
-
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-btn);
-            font-size: 13.5px;
-            background: #ffffff;
-            outline: none;
-        }
-
-        .btn-action {
-            background: var(--accent-blue);
-            color: #ffffff;
-            border: none;
-            border-radius: var(--radius-btn);
-            padding: 11px 16px;
-            font-size: 13.5px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .btn-outline {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
-
-        .btn-danger {
-            background: rgba(255, 59, 48, 0.1);
-            color: var(--accent-red);
-            border: none;
-            border-radius: 8px;
-            padding: 5px 9px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-icon-text {
-            background: #f0f0f2;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            color: var(--text-primary);
-        }
-
-        .pages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 12px;
-            margin-top: 10px;
-            max-height: 380px;
-            overflow-y: auto;
-            padding: 4px;
-        }
-
-        .page-card {
-            background: #fbfbfd;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 8px;
-            text-align: center;
-            cursor: grab;
-            position: relative;
-            touch-action: manipulation;
-        }
-
-        .page-card:active {
-            cursor: grabbing;
-        }
-
-        .page-card canvas {
-            width: 100% !important;
-            height: auto !important;
-            display: block;
-            border-radius: 6px;
-            background: #ffffff;
-            pointer-events: none;
-            border: 1px solid #eee;
-        }
-
-        .page-card-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .page-card-actions-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .signature-box {
-            border: 1.5px dashed var(--border-color);
-            border-radius: 10px;
-            background: #fafafa;
-            position: relative;
-            margin-bottom: 8px;
-            touch-action: none;
-        }
-
-        #sigCanvas {
-            width: 100%;
-            height: 140px;
-            display: block;
-            border-radius: 10px;
-        }
-
-        .progress-container {
-            display: none;
-            width: 100%;
-            background: #eee;
-            border-radius: 980px;
-            height: 8px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: var(--accent-blue);
-            transition: width 0.2s ease;
-        }
-
-        .comparison-card {
-            display: none;
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 14px;
-            margin-top: 14px;
-        }
-
-        .download-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-secondary);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-top: auto;
-            padding-bottom: 12px;
-        }
-
-        .footer a {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        @media (max-width: 600px) {
-            .pages-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .download-group {
-                grid-template-columns: 1fr;
-            }
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-body); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 10px; }
+        .header { width: 100%; max-width: 920px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 4px; }
+        .lang-btn { background: #ffffff; border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 980px; font-size: 13px; font-weight: 600; cursor: pointer; }
+        .app-container { width: 100%; max-width: 920px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-main); padding: 16px 14px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); margin-bottom: 16px; }
+        .title-section { text-align: center; margin-bottom: 14px; }
+        h1 { font-size: 21px; font-weight: 700; margin-bottom: 6px; }
+        .security-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(52, 199, 89, 0.12); color: #1b8738; padding: 4px 12px; border-radius: 980px; font-size: 11.5px; font-weight: 600; }
+        
+        .upload-card { border: 2px dashed rgba(0, 113, 227, 0.3); background: #ffffff; border-radius: 14px; padding: 24px 14px; text-align: center; cursor: pointer; position: relative; }
+        .upload-card input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+        .active-file-card { display: none; background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 10px 12px; align-items: center; justify-content: space-between; margin-bottom: 14px; gap: 8px; }
+        .file-icon-text { background: rgba(0, 113, 227, 0.1); color: var(--accent-blue); border-radius: 6px; padding: 4px 8px; font-size: 12px; font-weight: bold; flex-shrink: 0; }
+        
+        .tabs-container { display: none; overflow-x: auto; white-space: nowrap; gap: 6px; padding-bottom: 8px; margin-bottom: 14px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .tabs-container::-webkit-scrollbar { display: none; }
+        .tab-btn { background: #ffffff; border: 1px solid var(--border-color); padding: 8px 14px; border-radius: 980px; font-size: 12px; font-weight: 600; color: var(--text-secondary); cursor: pointer; flex-shrink: 0; }
+        .tab-btn.active { background: var(--accent-blue); color: #ffffff; border-color: var(--accent-blue); }
+        
+        .tool-panel { display: none; background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; margin-bottom: 14px; }
+        .tool-panel.active { display: block; }
+        .form-group { margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px; }
+        .form-row { display: flex; gap: 10px; }
+        .form-row > div { flex: 1; }
+        
+        label { font-size: 12.5px; font-weight: 600; }
+        input[type="text"], input[type="number"], select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-btn); font-size: 13.5px; background: #ffffff; outline: none; }
+        
+        .btn-action { background: var(--accent-blue); color: #ffffff; border: none; border-radius: var(--radius-btn); padding: 11px 16px; font-size: 13.5px; font-weight: 600; cursor: pointer; width: 100%; min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-outline { background: #ffffff; border: 1px solid var(--border-color); color: var(--text-primary); }
+        .btn-danger { background: rgba(255, 59, 48, 0.1); color: var(--accent-red); border: none; border-radius: 8px; padding: 5px 9px; font-size: 11px; font-weight: 600; cursor: pointer; }
+        .btn-icon-text { background: #f0f0f2; border: none; border-radius: 6px; padding: 6px 10px; font-size: 11px; font-weight: 600; cursor: pointer; color: var(--text-primary); }
+        
+        .pages-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; margin-top: 10px; max-height: 420px; overflow-y: auto; padding: 4px; }
+        .page-card { background: #fbfbfd; border: 1px solid var(--border-color); border-radius: 10px; padding: 8px; text-align: center; cursor: grab; position: relative; touch-action: manipulation; }
+        .page-card:active { cursor: grabbing; }
+        .page-card canvas { width: 100% !important; height: auto !important; display: block; border-radius: 6px; background: #ffffff; pointer-events: none; border: 1px solid #eee; }
+        .page-card-actions { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+        .page-card-actions-row { display: flex; justify-content: space-between; align-items: center; }
+        
+        .signature-box { border: 2px dashed var(--border-color); border-radius: 10px; background: #ffffff; position: relative; margin-bottom: 8px; touch-action: none; cursor: crosshair; }
+        #sigCanvas { width: 100%; height: 160px; display: block; border-radius: 10px; }
+        
+        .progress-container { display: none; width: 100%; background: #eee; border-radius: 980px; height: 8px; margin: 10px 0; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: var(--accent-blue); transition: width 0.2s ease; }
+        
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 10px 20px; border-radius: 980px; font-size: 13px; font-weight: 600; z-index: 9999; display: none; }
+        
+        .footer { text-align: center; font-size: 12px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px; margin-top: auto; padding-bottom: 12px; }
+        .footer a { color: var(--accent-blue); text-decoration: none; font-weight: 600; }
+        
+        @media (max-width: 600px) { .pages-grid { grid-template-columns: repeat(3, 1fr); } .form-row { flex-direction: column; } }
     </style>
 </head>
 <body>
+
+    <div id="toast" class="toast">تمت العملية بنجاح</div>
 
     <div class="header">
         <div style="font-weight: 700; font-size: 15px;">PDF Studio</div>
@@ -381,15 +87,13 @@
 
     <div class="app-container">
         <div class="title-section">
-            <h1 id="appTitle">PDF Studio</h1>
-            <div class="security-badge">
-                <span>معالجة محلية</span>
-            </div>
+            <h1 id="appTitle">منصة أدوات PDF الشاملة</h1>
+            <div class="security-badge">معالجة محلية بالكامل</div>
         </div>
 
         <div class="upload-card" id="dropArea">
             <input type="file" id="fileInput" accept="application/pdf,image/png,image/jpeg" />
-            <div style="font-size: 14px; font-weight: 600;">اختر ملف PDF أو صور</div>
+            <div style="font-size: 14px; font-weight: 600;">اختر ملف PDF أو صور للبدء</div>
         </div>
 
         <div class="active-file-card" id="activeFileCard">
@@ -400,6 +104,7 @@
                     <div style="font-size: 11px; color: var(--text-secondary);" id="displayFileMeta">-</div>
                 </div>
             </div>
+            <button class="btn-action" style="width: auto; padding: 6px 14px; min-height: 32px;" onclick="downloadMainResult()">تنزيل النهائي</button>
             <button class="btn-danger" onclick="resetFile()">إغلاق</button>
         </div>
 
@@ -408,172 +113,211 @@
         </div>
 
         <div class="tabs-container" id="toolTabs">
-            <button class="tab-btn active" data-tool="organize" onclick="setTool('organize')">ترتيب وتدوير</button>
-            <button class="tab-btn" data-tool="split" onclick="setTool('split')">تقسيم</button>
-            <button class="tab-btn" data-tool="signature" onclick="setTool('signature')">توقيع</button>
-            <button class="tab-btn" data-tool="stamps" onclick="setTool('stamps')">أختام</button>
-            <button class="tab-btn" data-tool="redact" onclick="setTool('redact')">حجب</button>
+            <button class="tab-btn active" data-tool="organize" onclick="setTool('organize')">عرض وترتيب</button>
+            <button class="tab-btn" data-tool="signature" onclick="setTool('signature')">توقيع رقمي</button>
+            <button class="tab-btn" data-tool="stamps" onclick="setTool('stamps')">أختام مخصصة</button>
+            <button class="tab-btn" data-tool="split" onclick="setTool('split')">تقسيم (ZIP)</button>
+            <button class="tab-btn" data-tool="redact" onclick="setTool('redact')">حجب أمني</button>
             <button class="tab-btn" data-tool="nup" onclick="setTool('nup')">دمج للطباعة</button>
-            <button class="tab-btn" data-tool="excel" onclick="setTool('excel')">استخراج لـ Excel</button>
-            <button class="tab-btn" data-tool="compress" onclick="setTool('compress')">ضغط</button>
+            <button class="tab-btn" data-tool="excel" onclick="setTool('excel')">استخراج Excel</button>
+            <button class="tab-btn" data-tool="compress" onclick="setTool('compress')">ضغط الحجم</button>
             <button class="tab-btn" data-tool="export" onclick="setTool('export')">تصدير (صور/نص)</button>
             <button class="tab-btn" data-tool="watermark" onclick="setTool('watermark')">علامة مائية</button>
-            <button class="tab-btn" data-tool="numbers" onclick="setTool('numbers')">ترقيم</button>
-            <button class="tab-btn" data-tool="merge" onclick="setTool('merge')">دمج ملفات</button>
-            <button class="tab-btn" data-tool="clean" onclick="setTool('clean')">تنظيف</button>
+            <button class="tab-btn" data-tool="numbers" onclick="setTool('numbers')">ترقيم الصفحات</button>
+            <button class="tab-btn" data-tool="merge" onclick="setTool('merge')">إضافة ملفات</button>
+            <button class="tab-btn" data-tool="clean" onclick="setTool('clean')">تنظيف الخصائص</button>
         </div>
 
+        <!-- الترتيب -->
         <div class="tool-panel active" id="panelOrganize">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 12px; color: var(--text-secondary);">السحب للترتيب:</span>
-                <button class="btn-action" style="width: auto; padding: 6px 12px; min-height: 32px; font-size: 12px;" onclick="applyPageOrganization()">حفظ الترتيب</button>
+                <span style="font-size: 12px; color: var(--text-secondary);">اسحب لتغيير الترتيب:</span>
+                <button class="btn-action btn-outline" style="width: auto; padding: 6px 12px; min-height: 32px; font-size: 12px;" onclick="applyPageOrganization()">تثبيت الترتيب</button>
             </div>
             <div class="pages-grid" id="organizeGrid"></div>
         </div>
 
-        <div class="tool-panel" id="panelSplit">
-            <button class="btn-action" onclick="runSplitToZip()">تقسيم وتنزيل (ZIP)</button>
-        </div>
-
+        <!-- التوقيع المخصص -->
         <div class="tool-panel" id="panelSignature">
             <div class="form-group">
-                <label>الرسم:</label>
+                <label>ارسم التوقيع:</label>
                 <div class="signature-box">
                     <canvas id="sigCanvas"></canvas>
                 </div>
-                <button class="btn-icon-text" style="align-self: flex-start;" onclick="clearSignature()">مسح اللوحة</button>
+                <div style="display: flex; gap: 8px; justify-content: space-between;">
+                    <button class="btn-icon-text" onclick="clearSignature()">مسح اللوحة</button>
+                    <select id="sigColor" onchange="updateSigColor()" style="width: auto; padding: 4px 8px; height: 32px;">
+                        <option value="#000000">قلم أسود</option>
+                        <option value="#0071e3">قلم أزرق</option>
+                        <option value="#ff3b30">قلم أحمر</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الصفحة المستهدفة:</label>
+                    <input type="number" id="sigPageNum" value="1" min="1" />
+                </div>
+                <div class="form-group">
+                    <label>حجم التوقيع:</label>
+                    <select id="sigSize">
+                        <option value="120">صغير</option>
+                        <option value="180" selected>متوسط</option>
+                        <option value="250">كبير</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group">
-                <label>الصفحة:</label>
-                <input type="number" id="sigPageNum" value="1" min="1" />
-            </div>
-            <div class="form-group">
-                <label>الموضع:</label>
+                <label>موضع التوقيع في الصفحة:</label>
                 <select id="sigPosition">
+                    <option value="top-right">أعلى اليمين</option>
+                    <option value="top-center">أعلى المنتصف</option>
+                    <option value="top-left">أعلى اليسار</option>
+                    <option value="mid-right">وسط اليمين</option>
+                    <option value="mid-center">وسط الصفحة</option>
+                    <option value="mid-left">وسط اليسار</option>
                     <option value="bottom-right">أسفل اليمين</option>
-                    <option value="bottom-left">أسفل اليسار</option>
                     <option value="bottom-center">أسفل المنتصف</option>
+                    <option value="bottom-left" selected>أسفل اليسار</option>
                 </select>
             </div>
-            <button class="btn-action" onclick="applySignature()">تطبيق</button>
+            <button class="btn-action" onclick="applySignature()">ختم التوقيع فوراً</button>
         </div>
 
+        <!-- الختم المخصص -->
         <div class="tool-panel" id="panelStamps">
             <div class="form-group">
-                <label>الختم:</label>
-                <select id="stampType">
-                    <option value="معتمد / APPROVED">معتمد / APPROVED</option>
-                    <option value="سري للغاية / CONFIDENTIAL">سري للغاية / CONFIDENTIAL</option>
-                    <option value="مسودة / DRAFT">مسودة / DRAFT</option>
-                    <option value="نسخة طبق الأصل / COPY">نسخة طبق الأصل / COPY</option>
-                </select>
+                <label>نص الختم (مخصص):</label>
+                <input type="text" id="customStampText" placeholder="مثال: معتمد، سري، نسخة أصلية..." value="معتمد / APPROVED" />
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>لون الختم:</label>
+                    <select id="stampColor">
+                        <option value="#34c759">أخضر</option>
+                        <option value="#ff3b30">أحمر</option>
+                        <option value="#0071e3">أزرق</option>
+                        <option value="#000000">أسود</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الصفحة المستهدفة:</label>
+                    <input type="number" id="stampPageNum" value="1" min="1" />
+                </div>
             </div>
             <div class="form-group">
-                <label>الصفحة:</label>
-                <input type="number" id="stampPageNum" value="1" min="1" />
+                <label>موضع الختم في الصفحة:</label>
+                <select id="stampPosition">
+                    <option value="top-right">أعلى اليمين</option>
+                    <option value="top-center">أعلى المنتصف</option>
+                    <option value="top-left">أعلى اليسار</option>
+                    <option value="mid-right">وسط اليمين</option>
+                    <option value="mid-center">وسط الصفحة</option>
+                    <option value="mid-left">وسط اليسار</option>
+                    <option value="bottom-right">أسفل اليمين</option>
+                    <option value="bottom-center">أسفل المنتصف</option>
+                    <option value="bottom-left" selected>أسفل اليسار</option>
+                </select>
             </div>
-            <button class="btn-action" onclick="applyOfficialStamp()">تطبيق</button>
+            <button class="btn-action" onclick="applyOfficialStamp()">إضافة الختم فوراً</button>
+        </div>
+
+        <!-- باقي الأدوات -->
+        <div class="tool-panel" id="panelSplit">
+            <button class="btn-action" onclick="runSplitToZip()">تقسيم المستند وتنزيل (ZIP)</button>
         </div>
 
         <div class="tool-panel" id="panelRedact">
             <div class="form-group">
-                <label>الصفحة:</label>
+                <label>رقم الصفحة للحجب:</label>
                 <input type="number" id="redactPageNum" value="1" min="1" />
             </div>
             <div class="form-group">
-                <label>الموضع:</label>
+                <label>المنطقة المراد حجبها (تقريبي):</label>
                 <select id="redactPosition">
-                    <option value="top">أعلى الصفحة</option>
+                    <option value="top">الترويسة (أعلى الصفحة)</option>
                     <option value="middle">وسط الصفحة</option>
-                    <option value="bottom">أسفل الصفحة</option>
+                    <option value="bottom">التذييل (أسفل الصفحة)</option>
                 </select>
             </div>
-            <button class="btn-action" onclick="runRedaction()">تطبيق</button>
+            <button class="btn-action" onclick="runRedaction()">حجب المنطقة فوراً</button>
         </div>
 
         <div class="tool-panel" id="panelNup">
-            <button class="btn-action" onclick="runNUpMerge()">دمج للطباعة</button>
+            <button class="btn-action" onclick="runNUpMerge()">تحويل 2 صفحة في ورقة للطباعة</button>
         </div>
 
         <div class="tool-panel" id="panelExcel">
-            <button class="btn-action" onclick="runExtractToExcel()">استخراج (CSV)</button>
+            <button class="btn-action" onclick="runExtractToExcel()">استخراج نصوص الجداول (CSV)</button>
         </div>
 
         <div class="tool-panel" id="panelCompress">
             <div class="form-group">
-                <label>المستوى:</label>
+                <label>مستوى الضغط:</label>
                 <select id="compressQuality">
-                    <option value="0.75">متوازن</option>
-                    <option value="0.45">قوي</option>
+                    <option value="0.75">ضغط متوازن</option>
+                    <option value="0.45">ضغط قوي (حجم أصغر)</option>
                 </select>
             </div>
-            <button class="btn-action" onclick="runCompression()">تطبيق</button>
+            <button class="btn-action" onclick="runCompression()">تطبيق الضغط</button>
         </div>
 
         <div class="tool-panel" id="panelExport">
-            <button class="btn-action" style="margin-bottom: 8px;" onclick="exportToImages()">تصدير صور (ZIP)</button>
-            <button class="btn-action btn-outline" onclick="exportToText()">استخراج نصوص (TXT)</button>
+            <button class="btn-action" style="margin-bottom: 8px;" onclick="exportToImages()">تصدير الصفحات كصور (ZIP)</button>
+            <button class="btn-action btn-outline" onclick="exportToText()">استخراج كامل النصوص (TXT)</button>
         </div>
 
         <div class="tool-panel" id="panelWatermark">
             <div class="form-group">
-                <label>النص:</label>
-                <input type="text" id="watermarkInput" placeholder="سري / CONFIDENTIAL" />
+                <label>نص العلامة المائية:</label>
+                <input type="text" id="watermarkInput" placeholder="مسودة" />
             </div>
-            <div class="form-group">
-                <label>أو صورة:</label>
-                <input type="file" id="wmImageInput" accept="image/png,image/jpeg" />
-            </div>
-            <button class="btn-action" onclick="runWatermark()">تطبيق</button>
+            <button class="btn-action" onclick="runWatermark()">تطبيق العلامة المائية</button>
         </div>
 
         <div class="tool-panel" id="panelNumbers">
             <div class="form-group">
-                <label>الموضع:</label>
+                <label>مكان الترقيم:</label>
                 <select id="numbersPosition">
                     <option value="bottom-center">أسفل المنتصف</option>
                     <option value="bottom-right">أسفل اليمين</option>
                     <option value="bottom-left">أسفل اليسار</option>
                 </select>
             </div>
-            <button class="btn-action" onclick="runPageNumbers()">تطبيق</button>
+            <button class="btn-action" onclick="runPageNumbers()">ترقيم كافة الصفحات</button>
         </div>
 
         <div class="tool-panel" id="panelMerge">
             <div class="form-group">
-                <label>الملفات:</label>
+                <label>اختر ملفات للإضافة:</label>
                 <input type="file" id="mergeFileInput" accept="application/pdf" multiple />
             </div>
-            <button class="btn-action" onclick="runMerge()">دمج</button>
+            <button class="btn-action" onclick="runMerge()">دمج الملفات</button>
         </div>
 
         <div class="tool-panel" id="panelClean">
-            <button class="btn-action" onclick="runCleanMetadata()">تنظيف وتصدير</button>
-        </div>
-
-        <div class="comparison-card" id="resultCard">
-            <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 4px;">تمت المعالجة</div>
-            <div style="font-size: 12px; color: var(--text-secondary);" id="resultMeta">-</div>
-            <div class="download-group">
-                <button class="btn-action" style="background: var(--accent-green);" onclick="downloadResult()">تنزيل</button>
-                <button class="btn-action btn-outline" onclick="applyAsActiveFile()">متابعة التعديل</button>
-            </div>
+            <button class="btn-action" onclick="runCleanMetadata()">مسح الخصائص والميتاداتا</button>
         </div>
     </div>
 
     <div class="footer">
-        <div><a href="https://linkedin.com/in/mbnq" target="_blank" rel="noopener noreferrer">LinkedIn: mbnq</a></div>
+        <div><a href="https://linkedin.com/in/mbnq" target="_blank">LinkedIn: mbnq</a></div>
         <div>mbnq1@outlook.com</div>
     </div>
 
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        let currentLang = 'ar';
         let originalBytes = null;
         let originalFileName = '';
-        let resultPdfBytes = null;
         let pageItems = [];
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(() => { t.style.display = 'none'; }, 2500);
+        }
 
         function setProgress(percent) {
             const wrap = document.getElementById('progressWrap');
@@ -598,42 +342,32 @@
 
             const file = files[0];
             originalFileName = file.name;
-            const buffer = await file.arrayBuffer();
-            originalBytes = new Uint8Array(buffer);
+            originalBytes = new Uint8Array(await file.arrayBuffer());
 
-            try {
-                await PDFLib.PDFDocument.load(originalBytes);
-            } catch (err) {
-                const pass = prompt('الرقم السري:');
+            try { await PDFLib.PDFDocument.load(originalBytes); }
+            catch (err) {
+                const pass = prompt('الرقم السري للملف:');
                 if (pass) {
                     try {
                         const unlockedDoc = await PDFLib.PDFDocument.load(originalBytes, { password: pass });
                         originalBytes = await unlockedDoc.save();
-                    } catch (e2) {
-                        alert('خطأ في الرقم السري');
-                        return;
-                    }
-                } else {
-                    return;
-                }
+                    } catch (e2) { alert('الرقم السري خاطئ'); return; }
+                } else { return; }
             }
-
             await initFileState();
         });
 
         async function initFileState() {
             const pdfDoc = await PDFLib.PDFDocument.load(originalBytes);
             const count = pdfDoc.getPageCount();
-            pageItems = Array.from({ length: count }, (_, i) => ({
-                origIndex: i,
-                rotation: pdfDoc.getPage(i).getRotation().angle
-            }));
+            pageItems = Array.from({ length: count }, (_, i) => ({ origIndex: i, rotation: pdfDoc.getPage(i).getRotation().angle }));
 
             document.getElementById('dropArea').style.display = 'none';
             document.getElementById('activeFileCard').style.display = 'flex';
             document.getElementById('toolTabs').style.display = 'flex';
             document.getElementById('displayFileName').innerText = originalFileName;
-            updateMetaDisplay(originalBytes.length, count);
+            const size = (originalBytes.length / (1024 * 1024)).toFixed(2);
+            document.getElementById('displayFileMeta').innerText = size + ' MB • ' + count + ' صفحة';
 
             document.getElementById('sigPageNum').max = count;
             document.getElementById('stampPageNum').max = count;
@@ -643,22 +377,14 @@
             initSignaturePad();
         }
 
-        function updateMetaDisplay(bytesLen, count) {
-            const size = (bytesLen / (1024 * 1024)).toFixed(2);
-            document.getElementById('displayFileMeta').innerText = size + ' MB • ' + count + ' صفحات';
-        }
-
         function resetFile() {
-            originalBytes = null;
-            resultPdfBytes = null;
-            pageItems = [];
+            originalBytes = null; pageItems = [];
             document.getElementById('fileInput').value = '';
             document.getElementById('dropArea').style.display = 'block';
             document.getElementById('activeFileCard').style.display = 'none';
             document.getElementById('toolTabs').style.display = 'none';
             document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
             document.getElementById('panelOrganize').classList.add('active');
-            document.getElementById('resultCard').style.display = 'none';
         }
 
         function resizeSignaturePad() {
@@ -666,22 +392,16 @@
             const rect = sigCanvas.parentElement.getBoundingClientRect();
             if(rect.width > 0) {
                 sigCanvas.width = rect.width;
-                sigCanvas.height = 140;
-                sigCtx.lineWidth = 2.5;
-                sigCtx.lineCap = 'round';
-                sigCtx.strokeStyle = '#000000';
+                sigCanvas.height = 160;
+                updateSigColor();
             }
         }
 
         function setTool(toolName) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tool === toolName));
             document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById('panel' + toolName.charAt(0).toUpperCase() + toolName.slice(1));
-            if (target) target.classList.add('active');
-
-            if (toolName === 'signature') {
-                setTimeout(resizeSignaturePad, 50);
-            }
+            document.getElementById('panel' + toolName.charAt(0).toUpperCase() + toolName.slice(1)).classList.add('active');
+            if (toolName === 'signature') setTimeout(resizeSignaturePad, 50);
         }
 
         async function renderOrganizeGrid() {
@@ -692,58 +412,42 @@
             for (let i = 0; i < pageItems.length; i++) {
                 const item = pageItems[i];
                 const page = await pdf.getPage(item.origIndex + 1);
-                const viewport = page.getViewport({ scale: 0.22, rotation: item.rotation });
+                const viewport = page.getViewport({ scale: 0.25, rotation: item.rotation });
 
                 const card = document.createElement('div');
                 card.className = 'page-card';
                 card.dataset.index = i;
 
                 const canvas = document.createElement('canvas');
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
+                canvas.width = viewport.width; canvas.height = viewport.height;
                 await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
 
                 card.appendChild(canvas);
-                
                 const actions = document.createElement('div');
                 actions.className = 'page-card-actions';
-                actions.innerHTML = `
-                    <div style="font-size: 12px; font-weight: bold; color: var(--text-secondary);">صفحة ${i + 1}</div>
+                actions.innerHTML = `<div style="font-size: 12px; font-weight: bold; color: var(--text-secondary);">الصفحة ${i + 1}</div>
                     <div class="page-card-actions-row">
                         <button class="btn-icon-text" onclick="rotatePageDirect(${i})">تدوير</button>
                         <button class="btn-danger" onclick="removeSinglePage(${i})">حذف</button>
-                    </div>
-                `;
+                    </div>`;
                 card.appendChild(actions);
                 grid.appendChild(card);
             }
 
             if (!grid.sortableInstance) {
                 grid.sortableInstance = new Sortable(grid, {
-                    animation: 150,
-                    ghostClass: 'sortable-ghost',
+                    animation: 150, ghostClass: 'sortable-ghost',
                     onEnd: function () {
                         const newOrder = [];
-                        grid.querySelectorAll('.page-card').forEach(el => {
-                            newOrder.push(pageItems[parseInt(el.dataset.index)]);
-                        });
-                        pageItems = newOrder;
-                        renderOrganizeGrid();
+                        grid.querySelectorAll('.page-card').forEach(el => { newOrder.push(pageItems[parseInt(el.dataset.index)]); });
+                        pageItems = newOrder; renderOrganizeGrid();
                     }
                 });
             }
         }
 
-        function rotatePageDirect(index) {
-            pageItems[index].rotation = (pageItems[index].rotation + 90) % 360;
-            renderOrganizeGrid();
-        }
-
-        function removeSinglePage(index) {
-            if (pageItems.length <= 1) return;
-            pageItems.splice(index, 1);
-            renderOrganizeGrid();
-        }
+        function rotatePageDirect(index) { pageItems[index].rotation = (pageItems[index].rotation + 90) % 360; renderOrganizeGrid(); }
+        function removeSinglePage(index) { if (pageItems.length <= 1) return; pageItems.splice(index, 1); renderOrganizeGrid(); }
 
         async function applyPageOrganization() {
             const srcDoc = await PDFLib.PDFDocument.load(originalBytes);
@@ -753,35 +457,12 @@
                 copiedPage.setRotation(PDFLib.degrees(item.rotation));
                 newDoc.addPage(copiedPage);
             }
-            resultPdfBytes = await newDoc.save();
-            showResultCard();
+            originalBytes = await newDoc.save();
+            await initFileState();
+            showToast('تم تثبيت الترتيب');
         }
 
-        async function runSplitToZip() {
-            setProgress(20);
-            const zip = new JSZip();
-            const srcDoc = await PDFLib.PDFDocument.load(originalBytes);
-            const total = srcDoc.getPageCount();
-
-            for (let i = 0; i < total; i++) {
-                const singleDoc = await PDFLib.PDFDocument.create();
-                const [page] = await singleDoc.copyPages(srcDoc, [i]);
-                singleDoc.addPage(page);
-                const bytes = await singleDoc.save();
-                zip.file('page_' + (i + 1) + '.pdf', bytes);
-                setProgress(20 + Math.round(((i + 1) / total) * 70));
-            }
-
-            const zipBlob = await zip.generateAsync({ type: 'blob' });
-            setProgress(100);
-            setTimeout(() => setProgress(0), 400);
-
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(zipBlob);
-            link.download = originalFileName.replace('.pdf', '') + '_split.zip';
-            link.click();
-        }
-
+        // ============ نظام التوقيع المخصص ============
         let sigCanvas, sigCtx, isDrawing = false;
         function initSignaturePad() {
             sigCanvas = document.getElementById('sigCanvas');
@@ -794,10 +475,8 @@
                 const rect = sigCanvas.getBoundingClientRect();
                 const clientX = e.clientX || (e.touches && e.touches[0].clientX);
                 const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-                
                 const scaleX = sigCanvas.width / rect.width;
                 const scaleY = sigCanvas.height / rect.height;
-                
                 sigCtx.lineTo((clientX - rect.left) * scaleX, (clientY - rect.top) * scaleY);
                 sigCtx.stroke();
             };
@@ -810,70 +489,83 @@
             sigCanvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
         }
 
-        function clearSignature() {
-            if (sigCtx) sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+        function clearSignature() { if (sigCtx) sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height); }
+        function updateSigColor() {
+            if(!sigCtx) return;
+            sigCtx.strokeStyle = document.getElementById('sigColor').value;
+            sigCtx.lineWidth = 3;
+            sigCtx.lineCap = 'round';
+        }
+
+        function getCalculatedPosition(posString, pageW, pageH, itemW, itemH) {
+            let x = 40, y = 40;
+            if (posString.includes('right')) x = pageW - itemW - 40;
+            else if (posString.includes('center')) x = (pageW - itemW) / 2;
+            
+            if (posString.includes('top')) y = pageH - itemH - 40;
+            else if (posString.includes('mid')) y = (pageH - itemH) / 2;
+            return { x, y };
         }
 
         async function applySignature() {
-            const pngBytes = await fetch(sigCanvas.toDataURL('image/png')).then(r => r.arrayBuffer());
+            const dataUrl = sigCanvas.toDataURL('image/png');
             const pdfDoc = await PDFLib.PDFDocument.load(originalBytes);
-            const signatureImg = await pdfDoc.embedPng(pngBytes);
+            const signatureImg = await pdfDoc.embedPng(dataUrl);
+            
             const pageIndex = Math.max(0, parseInt(document.getElementById('sigPageNum').value) - 1);
             const page = pdfDoc.getPages()[pageIndex] || pdfDoc.getPages()[0];
-            const { width } = page.getSize();
+            const { width: pW, height: pH } = page.getSize();
+            
+            const sigWidth = parseInt(document.getElementById('sigSize').value);
+            const sigHeight = sigWidth * (sigCanvas.height / sigCanvas.width);
+            const pos = getCalculatedPosition(document.getElementById('sigPosition').value, pW, pH, sigWidth, sigHeight);
 
-            const pos = document.getElementById('sigPosition').value;
-            let x = 40;
-            if (pos === 'bottom-right') x = width - 180;
-            else if (pos === 'bottom-center') x = (width - 140) / 2;
-
-            page.drawImage(signatureImg, { x, y: 40, width: 140, height: 60 });
-            resultPdfBytes = await pdfDoc.save();
-            showResultCard();
+            page.drawImage(signatureImg, { x: pos.x, y: pos.y, width: sigWidth, height: sigHeight });
+            
+            originalBytes = await pdfDoc.save();
+            await initFileState();
+            setTool('organize');
+            showToast('تم إضافة التوقيع بنجاح');
         }
 
+        // ============ نظام الأختام المخصص ============
         async function applyOfficialStamp() {
-            const stampType = document.getElementById('stampType').value;
+            const stampText = document.getElementById('customStampText').value || 'معتمد';
+            const color = document.getElementById('stampColor').value;
+            
             const pdfDoc = await PDFLib.PDFDocument.load(originalBytes);
             const pageIndex = Math.max(0, parseInt(document.getElementById('stampPageNum').value) - 1);
             const page = pdfDoc.getPages()[pageIndex] || pdfDoc.getPages()[0];
-            const { width, height } = page.getSize();
+            const { width: pW, height: pH } = page.getSize();
 
             const canvas = document.createElement('canvas');
-            canvas.width = 400;
-            canvas.height = 160;
+            canvas.width = 500; canvas.height = 180;
             const ctx = canvas.getContext('2d');
 
-            let color = '#34c759';
-            if (stampType.includes('CONFIDENTIAL')) color = '#ff3b30';
-            if (stampType.includes('DRAFT')) color = '#ff9500';
-            if (stampType.includes('COPY')) color = '#0071e3';
-
             ctx.strokeStyle = color;
-            ctx.lineWidth = 6;
-            ctx.strokeRect(10, 10, 380, 140);
+            ctx.lineWidth = 8;
+            ctx.setLineDash([15, 10]);
+            ctx.strokeRect(10, 10, 480, 160);
 
             ctx.fillStyle = color;
-            ctx.font = 'bold 24px sans-serif';
+            ctx.font = 'bold 36px sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(stampType, 200, 80);
+            ctx.fillText(stampText, 250, 90);
 
-            const stampPng = await fetch(canvas.toDataURL('image/png')).then(r => r.arrayBuffer());
-            const embeddedStamp = await pdfDoc.embedPng(stampPng);
+            const stampImg = await pdfDoc.embedPng(canvas.toDataURL('image/png'));
+            const stampW = 200, stampH = 72;
+            const pos = getCalculatedPosition(document.getElementById('stampPosition').value, pW, pH, stampW, stampH);
 
-            page.drawImage(embeddedStamp, {
-                x: width - 220,
-                y: height - 120,
-                width: 180,
-                height: 72,
-                opacity: 0.85
-            });
+            page.drawImage(stampImg, { x: pos.x, y: pos.y, width: stampW, height: stampH, opacity: 0.9 });
 
-            resultPdfBytes = await pdfDoc.save();
-            showResultCard();
+            originalBytes = await pdfDoc.save();
+            await initFileState();
+            setTool('organize');
+            showToast('تم ختم المستند بنجاح');
         }
 
+        // ============ باقي الأدوات ============
         async function runRedaction() {
             const pdfDoc = await PDFLib.PDFDocument.load(originalBytes);
             const pIdx = Math.max(0, parseInt(document.getElementById('redactPageNum').value) - 1);
@@ -885,17 +577,11 @@
             if (pos === 'top') y = height - 90;
             if (pos === 'bottom') y = 70;
 
-            page.drawRectangle({
-                x: 40,
-                y: y,
-                width: width - 80,
-                height: 35,
-                color: PDFLib.rgb(0, 0, 0),
-                opacity: 1.0
-            });
-
-            resultPdfBytes = await pdfDoc.save();
-            showResultCard();
+            page.drawRectangle({ x: 40, y: y, width: width - 80, height: 40, color: PDFLib.rgb(0, 0, 0), opacity: 1.0 });
+            originalBytes = await pdfDoc.save();
+            await initFileState();
+            setTool('organize');
+            showToast('تم حجب المنطقة المحددة');
         }
 
         async function runNUpMerge() {
@@ -903,131 +589,53 @@
             const srcDoc = await PDFLib.PDFDocument.load(originalBytes);
             const newDoc = await PDFLib.PDFDocument.create();
             const pages = srcDoc.getPages();
-            
             for (let i = 0; i < pages.length; i += 2) {
                 const pageA4 = newDoc.addPage([842, 595]);
                 const p1 = pages[i];
                 const { width: w1, height: h1 } = p1.getSize();
                 const scale1 = Math.min(385 / w1, 535 / h1);
-                
                 const embedded1 = await newDoc.embedPage(p1);
-                pageA4.drawPage(embedded1, { 
-                    x: 20 + (385 - w1 * scale1) / 2, 
-                    y: 30 + (535 - h1 * scale1) / 2, 
-                    xScale: scale1, 
-                    yScale: scale1 
-                });
+                pageA4.drawPage(embedded1, { x: 20 + (385 - w1 * scale1) / 2, y: 30 + (535 - h1 * scale1) / 2, xScale: scale1, yScale: scale1 });
 
                 if (i + 1 < pages.length) {
                     const p2 = pages[i + 1];
                     const { width: w2, height: h2 } = p2.getSize();
                     const scale2 = Math.min(385 / w2, 535 / h2);
                     const embedded2 = await newDoc.embedPage(p2);
-                    pageA4.drawPage(embedded2, { 
-                        x: 435 + (385 - w2 * scale2) / 2, 
-                        y: 30 + (535 - h2 * scale2) / 2, 
-                        xScale: scale2, 
-                        yScale: scale2 
-                    });
+                    pageA4.drawPage(embedded2, { x: 435 + (385 - w2 * scale2) / 2, y: 30 + (535 - h2 * scale2) / 2, xScale: scale2, yScale: scale2 });
                 }
                 setProgress(30 + Math.round((i / pages.length) * 60));
             }
-
-            resultPdfBytes = await newDoc.save();
-            setProgress(100);
-            setTimeout(() => setProgress(0), 400);
-            showResultCard();
-        }
-
-        async function extractSmartTextFromPDF(pdfBytes, isCsv = false) {
-            const pdf = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
-            let finalOutput = isCsv ? '\uFEFF' : '';
-
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const textContent = await page.getTextContent();
-                
-                const lines = {};
-                for (const item of textContent.items) {
-                    if (!item.str.trim()) continue;
-                    const y = Math.round(item.transform[5] / 5) * 5;
-                    
-                    if (!lines[y]) lines[y] = [];
-                    lines[y].push({
-                        str: item.str,
-                        x: item.transform[4]
-                    });
-                }
-
-                const sortedY = Object.keys(lines).map(Number).sort((a, b) => b - a);
-                if (!isCsv) finalOutput += '--- الصفحة ' + i + ' ---\n';
-
-                for (const y of sortedY) {
-                    const lineItems = lines[y].sort((a, b) => b.x - a.x);
-                    const lineStr = lineItems.map(it => it.str.trim()).filter(Boolean);
-
-                    if (isCsv) {
-                        const csvLine = lineStr.map(s => '"' + s.replace(/"/g, '""') + '"').join(',');
-                        finalOutput += csvLine + '\r\n';
-                    } else {
-                        finalOutput += lineStr.join(' ') + '\n';
-                    }
-                }
-                if (!isCsv) finalOutput += '\n\n';
-            }
-            return finalOutput;
+            originalBytes = await newDoc.save();
+            setProgress(100); setTimeout(() => setProgress(0), 400);
+            await initFileState(); setTool('organize'); showToast('تم تجهيز الملف للطباعة');
         }
 
         async function runExtractToExcel() {
             setProgress(50);
-            const csvContent = await extractSmartTextFromPDF(originalBytes, true);
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = originalFileName.replace('.pdf', '') + '_extracted.csv';
-            link.click();
-            setProgress(100);
-            setTimeout(() => setProgress(0), 400);
-        }
-
-        async function exportToText() {
-            setProgress(50);
-            const textContent = await extractSmartTextFromPDF(originalBytes, false);
-            const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = originalFileName.replace('.pdf', '') + '_text.txt';
-            link.click();
-            setProgress(100);
-            setTimeout(() => setProgress(0), 400);
-        }
-
-        async function exportToImages() {
-            setProgress(20);
-            const zip = new JSZip();
             const pdf = await pdfjsLib.getDocument({ data: originalBytes.slice() }).promise;
-            
+            let finalOutput = '\uFEFF';
             for (let i = 1; i <= pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
-                const viewport = page.getViewport({ scale: 1.5 });
-                const canvas = document.createElement('canvas');
-                canvas.width = viewport.width; 
-                canvas.height = viewport.height;
-                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-
-                const base64Data = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
-                zip.file('page_' + i + '.jpg', base64Data, {base64: true});
-                setProgress(20 + Math.round((i / pdf.numPages) * 60));
+                const textContent = await page.getTextContent();
+                const lines = {};
+                for (const item of textContent.items) {
+                    if (!item.str.trim()) continue;
+                    const y = Math.round(item.transform[5] / 5) * 5;
+                    if (!lines[y]) lines[y] = [];
+                    lines[y].push({ str: item.str, x: item.transform[4] });
+                }
+                const sortedY = Object.keys(lines).map(Number).sort((a, b) => b - a);
+                for (const y of sortedY) {
+                    const lineStr = lines[y].sort((a, b) => b.x - a.x).map(it => '"' + it.str.replace(/"/g, '""') + '"').join(',');
+                    finalOutput += lineStr + '\r\n';
+                }
             }
-            
-            const zipBlob = await zip.generateAsync({ type: 'blob' });
-            setProgress(100);
-            setTimeout(() => setProgress(0), 400);
-
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(zipBlob);
-            link.download = originalFileName.replace('.pdf', '') + '_images.zip';
+            link.href = URL.createObjectURL(new Blob([finalOutput], { type: 'text/csv;charset=utf-8;' }));
+            link.download = originalFileName.replace('.pdf', '') + '_excel.csv';
             link.click();
+            setProgress(100); setTimeout(() => setProgress(0), 400);
         }
 
         async function runCompression() {
@@ -1035,61 +643,39 @@
             const quality = parseFloat(document.getElementById('compressQuality').value);
             const pdf = await pdfjsLib.getDocument({ data: originalBytes.slice() }).promise;
             const newDoc = await PDFLib.PDFDocument.create();
-
             for (let i = 1; i <= pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
                 const viewport = page.getViewport({ scale: 1.0 });
                 const canvas = document.createElement('canvas');
                 canvas.width = viewport.width; canvas.height = viewport.height;
                 await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-
                 const img = await newDoc.embedJpg(canvas.toDataURL('image/jpeg', quality));
                 const p = newDoc.addPage([viewport.width, viewport.height]);
                 p.drawImage(img, { x: 0, y: 0, width: viewport.width, height: viewport.height });
                 setProgress(25 + Math.round((i / pdf.numPages) * 70));
             }
-
-            resultPdfBytes = await newDoc.save();
-            setProgress(100);
-            setTimeout(() => setProgress(0), 400);
-            showResultCard();
+            originalBytes = await newDoc.save();
+            setProgress(100); setTimeout(() => setProgress(0), 400);
+            await initFileState(); setTool('organize'); showToast('تم ضغط الملف بنجاح');
         }
 
         async function runWatermark() {
-            const text = document.getElementById('watermarkInput').value.trim() || 'CONFIDENTIAL';
-            const imgFile = document.getElementById('wmImageInput').files[0];
+            const text = document.getElementById('watermarkInput').value.trim() || 'نسخة';
             const pdfDoc = await PDFLib.PDFDocument.load(originalBytes);
-
-            let embeddedImage = null;
-            if (imgFile) {
-                const buffer = await imgFile.arrayBuffer();
-                embeddedImage = imgFile.type.includes('png') ? await pdfDoc.embedPng(buffer) : await pdfDoc.embedJpg(buffer);
-            } else {
-                const canvas = document.createElement('canvas');
-                canvas.width = 600; canvas.height = 300;
-                const ctx = canvas.getContext('2d');
-                ctx.fillStyle = 'rgba(180, 180, 180, 0.35)';
-                ctx.font = 'bold 44px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.translate(300, 150);
-                ctx.rotate(-Math.PI / 4);
-                ctx.fillText(text, 0, 0);
-                embeddedImage = await pdfDoc.embedPng(canvas.toDataURL('image/png'));
-            }
-
+            const canvas = document.createElement('canvas');
+            canvas.width = 600; canvas.height = 300;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'rgba(180, 180, 180, 0.35)';
+            ctx.font = 'bold 50px sans-serif'; ctx.textAlign = 'center';
+            ctx.translate(300, 150); ctx.rotate(-Math.PI / 4); ctx.fillText(text, 0, 0);
+            const embeddedImage = await pdfDoc.embedPng(canvas.toDataURL('image/png'));
+            
             pdfDoc.getPages().forEach(p => {
                 const { width, height } = p.getSize();
-                p.drawImage(embeddedImage, {
-                    x: (width - 400) / 2,
-                    y: (height - 200) / 2,
-                    width: 400,
-                    height: 200,
-                    opacity: 0.4
-                });
+                p.drawImage(embeddedImage, { x: (width - 400) / 2, y: (height - 200) / 2, width: 400, height: 200, opacity: 0.5 });
             });
-
-            resultPdfBytes = await pdfDoc.save();
-            showResultCard();
+            originalBytes = await pdfDoc.save();
+            await initFileState(); setTool('organize'); showToast('تمت إضافة العلامة المائية');
         }
 
         async function runPageNumbers() {
@@ -1097,42 +683,85 @@
             const pages = pdfDoc.getPages();
             const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
             const pos = document.getElementById('numbersPosition').value;
-
             pages.forEach((p, idx) => {
                 const { width } = p.getSize();
                 const str = (idx + 1) + " / " + pages.length;
                 let x = width / 2 - 15;
-                if (pos === 'bottom-right') x = width - 60;
-                else if (pos === 'bottom-left') x = 30;
-
+                if (pos === 'bottom-right') x = width - 60; else if (pos === 'bottom-left') x = 30;
                 p.drawText(str, { x, y: 20, size: 10, font, color: PDFLib.rgb(0.3, 0.3, 0.3) });
             });
-
-            resultPdfBytes = await pdfDoc.save();
-            showResultCard();
+            originalBytes = await pdfDoc.save();
+            await initFileState(); setTool('organize'); showToast('تم ترقيم الصفحات');
         }
 
         async function runMerge() {
             const files = document.getElementById('mergeFileInput').files;
             if (!files.length) return;
-
             const mergedDoc = await PDFLib.PDFDocument.load(originalBytes);
             for (let f of files) {
                 const doc = await PDFLib.PDFDocument.load(await f.arrayBuffer());
                 const copied = await mergedDoc.copyPages(doc, doc.getPageIndices());
                 copied.forEach(p => mergedDoc.addPage(p));
             }
-
-            resultPdfBytes = await mergedDoc.save();
-            showResultCard();
+            originalBytes = await mergedDoc.save();
+            await initFileState(); setTool('organize'); showToast('تم دمج الملفات بنجاح');
         }
 
         async function runCleanMetadata() {
             const pdfDoc = await PDFLib.PDFDocument.load(originalBytes);
             pdfDoc.setTitle(''); pdfDoc.setAuthor(''); pdfDoc.setSubject('');
             pdfDoc.setKeywords([]); pdfDoc.setProducer(''); pdfDoc.setCreator('');
-            resultPdfBytes = await pdfDoc.save();
-            showResultCard();
+            originalBytes = await pdfDoc.save();
+            await initFileState(); showToast('تم تنظيف الخصائص المخفية');
+        }
+
+        async function runSplitToZip() {
+            setProgress(20); const zip = new JSZip(); const srcDoc = await PDFLib.PDFDocument.load(originalBytes);
+            const total = srcDoc.getPageCount();
+            for (let i = 0; i < total; i++) {
+                const singleDoc = await PDFLib.PDFDocument.create();
+                const [page] = await singleDoc.copyPages(srcDoc, [i]);
+                singleDoc.addPage(page);
+                zip.file('page_' + (i + 1) + '.pdf', await singleDoc.save());
+                setProgress(20 + Math.round(((i + 1) / total) * 70));
+            }
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(await zip.generateAsync({ type: 'blob' }));
+            link.download = originalFileName.replace('.pdf', '') + '_split.zip';
+            link.click();
+            setProgress(100); setTimeout(() => setProgress(0), 400);
+        }
+
+        async function exportToImages() {
+            setProgress(20); const zip = new JSZip(); const pdf = await pdfjsLib.getDocument({ data: originalBytes.slice() }).promise;
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i); const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.createElement('canvas'); canvas.width = viewport.width; canvas.height = viewport.height;
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+                zip.file('page_' + i + '.jpg', canvas.toDataURL('image/jpeg', 0.9).split(',')[1], {base64: true});
+                setProgress(20 + Math.round((i / pdf.numPages) * 60));
+            }
+            const link = document.createElement('a'); link.href = URL.createObjectURL(await zip.generateAsync({ type: 'blob' }));
+            link.download = originalFileName.replace('.pdf', '') + '_images.zip'; link.click();
+            setProgress(100); setTimeout(() => setProgress(0), 400);
+        }
+
+        async function exportToText() {
+            setProgress(50); const pdf = await pdfjsLib.getDocument({ data: originalBytes.slice() }).promise; let finalOutput = '';
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i); const textContent = await page.getTextContent(); const lines = {};
+                for (const item of textContent.items) {
+                    if (!item.str.trim()) continue; const y = Math.round(item.transform[5] / 5) * 5;
+                    if (!lines[y]) lines[y] = []; lines[y].push({ str: item.str, x: item.transform[4] });
+                }
+                finalOutput += '--- الصفحة ' + i + ' ---\n';
+                Object.keys(lines).map(Number).sort((a, b) => b - a).forEach(y => {
+                    finalOutput += lines[y].sort((a, b) => b.x - a.x).map(it => it.str.trim()).filter(Boolean).join(' ') + '\n';
+                }); finalOutput += '\n\n';
+            }
+            const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([finalOutput], { type: 'text/plain;charset=utf-8' }));
+            link.download = originalFileName.replace('.pdf', '') + '_text.txt'; link.click();
+            setProgress(100); setTimeout(() => setProgress(0), 400);
         }
 
         async function convertImagesToPdf(files) {
@@ -1143,44 +772,21 @@
                 const page = newDoc.addPage([img.width, img.height]);
                 page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
             }
-            originalFileName = 'converted_images.pdf';
-            originalBytes = await newDoc.save();
-            await initFileState();
+            originalFileName = 'converted_images.pdf'; originalBytes = await newDoc.save(); await initFileState();
         }
 
-        async function showResultCard() {
-            const card = document.getElementById('resultCard');
-            card.style.display = 'block';
-            const resDoc = await PDFLib.PDFDocument.load(resultPdfBytes);
-            const count = resDoc.getPageCount();
-            const size = (resultPdfBytes.length / (1024 * 1024)).toFixed(2);
-            document.getElementById('resultMeta').innerText = size + ' MB • ' + count + ' صفحات';
-            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        function downloadResult() {
-            if (!resultPdfBytes) return;
-            const blob = new Blob([resultPdfBytes], { type: 'application/pdf' });
+        function downloadMainResult() {
+            if (!originalBytes) return;
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = originalFileName ? 'processed_' + originalFileName : 'document.pdf';
-            link.click();
-            URL.revokeObjectURL(link.href);
-        }
-
-        async function applyAsActiveFile() {
-            if (!resultPdfBytes) return;
-            originalBytes = resultPdfBytes;
-            resultPdfBytes = null;
-            await initFileState();
-            document.getElementById('resultCard').style.display = 'none';
+            link.href = URL.createObjectURL(new Blob([originalBytes], { type: 'application/pdf' }));
+            link.download = originalFileName ? 'معدل_' + originalFileName : 'document.pdf';
+            link.click(); URL.revokeObjectURL(link.href);
         }
 
         function toggleLanguage() {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            document.documentElement.lang = currentLang;
-            document.getElementById('langSwitch').innerText = currentLang === 'ar' ? 'English' : 'العربية';
+            const btn = document.getElementById('langSwitch');
+            document.documentElement.dir = document.documentElement.dir === 'rtl' ? 'ltr' : 'rtl';
+            btn.innerText = btn.innerText === 'English' ? 'العربية' : 'English';
         }
     </script>
 </body>
